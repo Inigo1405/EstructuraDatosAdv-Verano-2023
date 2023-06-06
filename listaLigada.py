@@ -32,7 +32,7 @@ class ListaLigada():
                 self.agregar_inicio(nodo)
         
             elif pos < 0:
-                print("No acepto vaores negativos :(")
+                print("No acepto valores negativos :(")
 
             else:
                 i = 1
