@@ -6,36 +6,40 @@ class ListaLigadaDoble():
         """Apuntador del inicio de la lista ligada"""
 
         self.cola = None
-
+        """Apuntador del final de la lista ligada"""
 
 
     def displayCabeza(self):
-        nodo_actual = self.cabeza
-        print(f'{nodo_actual.anterior}', end=" ↔ ")
+        if self.cabeza:
+            nodo_actual = self.cabeza
+            print(f'{nodo_actual.anterior}', end=" ↔ ")
 
-        while nodo_actual != None:
-            print(f'{nodo_actual.dato}', end=" ↔ ")
-            nodo_actual = nodo_actual.siguiente
+            while nodo_actual != None:
+                print(f'{nodo_actual.dato}', end=" ↔ ")
+                nodo_actual = nodo_actual.siguiente
 
-        print(f'{nodo_actual}')
-        return self.cabeza
+            print(f'{nodo_actual}')
+            return self.cabeza
     
     
     
     def displayCola(self):
-        nodo_actual = self.cola
-        print(f'{nodo_actual.siguiente}', end=" ↔ ")
+        if self.cabeza:
+            nodo_actual = self.cola
+            print(f'{nodo_actual.siguiente}', end=" ↔ ")
 
-        while nodo_actual != None:
-            print(f'{nodo_actual.dato}', end=" ↔ ")
-            nodo_actual = nodo_actual.anterior
+            while nodo_actual != None:
+                print(f'{nodo_actual.dato}', end=" ↔ ")
+                nodo_actual = nodo_actual.anterior
 
-        print(f'{nodo_actual}')
-        return self.cola
+            print(f'{nodo_actual}')
+            return self.cola
 
 
 
     def agregar(self, nodo):
+        nodo = Nodo(nodo)
+
         if self.cabeza:
             anterior_nodo = ultimo_nodo = self.cabeza
             
@@ -82,12 +86,16 @@ class ListaLigadaDoble():
 
 
     def agregar_pos(self, nodo, dir, pos):
+        nodo = Nodo(nodo)
+
         if self.cabeza:
             if pos == 0:
                 self.agregar_inicio(nodo, dir)
             
+
             elif pos < 0:
                 print("No acepto valores negativos :(")
+
 
             elif pos > 0:
                 nodo_actual = self.cabeza
@@ -96,44 +104,51 @@ class ListaLigadaDoble():
                     nodo_actual = nodo_actual.siguiente
                     i += 1
                 
+                
+                if nodo_actual.siguiente:
+                    if dir == 'der':
+                        nodo_siguiente = nodo_actual.siguiente
+                        nodo_anterior = nodo_actual
+                        
+                        # print(nodo_actual.dato)
+                        # print(nodo_actual.siguiente.dato)
 
-                if dir == 'der':
-                    nodo_siguiente = nodo_actual.siguiente
-                    nodo_anterior = nodo_actual
+                        nodo_actual.siguiente = nodo
+                        nodo_actual = nodo_actual.siguiente
+
+                        nodo_actual.siguiente = nodo_siguiente
+                        nodo_actual.anterior = nodo_anterior
+                        
+                        
+                        nodo_actual.siguiente.anterior = nodo_actual
+                        
+
+
+                    elif dir == 'izq':
+                        nodo_anterior = nodo_actual.anterior
+                        nodo_siguiente = nodo_actual
+
+                        # print(nodo_actual.dato)
+                        # print(nodo_actual.anterior.dato)
+
+                        nodo_actual.anterior = nodo
+                        nodo_actual = nodo_actual.anterior
+
+                        nodo_actual.anterior = nodo_anterior
+                        nodo_actual.siguiente = nodo_siguiente
+
+                        nodo_actual.anterior.siguiente = nodo_actual
+                        
+
+                    else: 
+                        print("Dirección no encontrada :(")
+
+
+                elif dir == 'der' and nodo_actual.siguiente == None: 
+                        nodo_actual.siguiente = nodo
+                        nodo.anterior = nodo_actual
+                        self.cola = nodo
                     
-                    # print(nodo_actual.dato)
-                    # print(nodo_actual.siguiente.dato)
-
-                    nodo_actual.siguiente = nodo
-                    nodo_actual = nodo_actual.siguiente
-
-                    nodo_actual.siguiente = nodo_siguiente
-                    nodo_actual.anterior = nodo_anterior
-                    
-                    nodo_actual.siguiente.anterior = nodo_actual
-                    
-
-
-                elif dir == 'izq':
-                    nodo_anterior = nodo_actual.anterior
-                    nodo_siguiente = nodo_actual
-
-                    # print(nodo_actual.dato)
-                    # print(nodo_actual.anterior.dato)
-
-                    nodo_actual.anterior = nodo
-                    nodo_actual = nodo_actual.anterior
-
-                    nodo_actual.anterior = nodo_anterior
-                    nodo_actual.siguiente = nodo_siguiente
-
-                    nodo_actual.anterior.siguiente = nodo_actual
-                    
-
-                else: 
-                    print("Dirección no encontrada :(")
-
-
 
         else:
            print("Aún no tengo datos :(")
@@ -141,20 +156,20 @@ class ListaLigadaDoble():
             
 
 
-
 lld = ListaLigadaDoble()
 
+lld.agregar(1)
+lld.agregar(3)
+lld.agregar(5)
+lld.agregar(7)
+lld.agregar(9)
 
 
-lld.agregar(Nodo(1))
-lld.agregar(Nodo(3))
-lld.agregar(Nodo(5))
-lld.agregar(Nodo(7))
-lld.agregar(Nodo(9))
-
-
-lld.agregar_pos(Nodo(15), 'der', 0)   
+lld.agregar_pos(20, 'izq', 1)   
+lld.agregar_pos(15, 'der', 5)   
 
 lld.displayCabeza()
 lld.displayCola()
+
+
 
