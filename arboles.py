@@ -64,11 +64,40 @@ class Arbol():
 
   
   
-  def binarioPerfecto(self, arbol):
-    pass
+  def binarioPerfecto(self, arbol, p, nivel=0):
+    if arbol is None:
+      return None
+    
+    if arbol.izq is None and arbol.der is None: # Hoja
+      return (p == nivel + 1)
 
-
+    if arbol.izq is None or arbol.der is None: 
+      return False
+    
+    return self.binarioPerfecto(arbol.izq, p, nivel + 1) and self.binarioPerfecto(arbol.der, p, nivel+1)
   
+
+
+  def profundidad(self, arbol):
+    if arbol is None:
+      return 0
+    
+    if arbol:
+
+      prof_izq = self.profundidad(arbol.izq)
+      prof_der = self.profundidad(arbol.der)
+
+      print("Izq ", prof_izq)
+      print("Der ", prof_der)
+
+      if prof_izq > prof_der:
+        return prof_izq + 1
+      
+      else:
+        return prof_der + 1
+
+    
+
   def binarioLleno(self, arbol):
     pass
 
@@ -169,7 +198,6 @@ arbolito.nodosHoja(arbolito.raiz)
 print("\n\nPeso arbol")
 print(arbolito.pesoArbol(arbolito.raiz))
 
-
-
-
+print("\n\nProfundidad arbol")
+print(arbolito.profundidad(arbolito.raiz))
 
