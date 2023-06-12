@@ -1,5 +1,5 @@
 import tkinter as tk
-from pila import Pila
+from estructurasLineales.pila import Pila
 
 # Create the main window
 root = tk.Tk()

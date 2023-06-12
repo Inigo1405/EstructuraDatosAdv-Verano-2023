@@ -126,6 +126,7 @@ class Arbol():
         arbol = None
         return temp
  
+      else:
         # Caso 2: Cuando tiene dos hijos
         # encontrar el sucesor en inorden
         temp = self.sucesor(arbol.der)
