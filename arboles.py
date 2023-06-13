@@ -87,8 +87,8 @@ class Arbol():
       prof_izq = self.profundidad(arbol.izq)
       prof_der = self.profundidad(arbol.der)
 
-      print("Izq ", prof_izq)
-      print("Der ", prof_der)
+      #print("Izq ", prof_izq)
+      #print("Der ", prof_der)
 
       if prof_izq > prof_der:
         return prof_izq + 1
@@ -115,7 +115,6 @@ class Arbol():
       
 
   
-  
   def pesoArbol(self, arbol):
     if arbol is None:
       return 0
@@ -131,53 +130,68 @@ class Arbol():
       return arbol.dato
 
 
+  def sucesor(self, arbol):
+    if arbol.izq:
+      return self.sucesor(arbol.izq)
+    
+    elif arbol.izq is None: 
+      return arbol
+
+
   
   def eliminar(self, arbol, dato):
     if arbol is None:
       return None
+
 
     # Busca el dato a eliminar
     if dato < arbol.dato:
       arbol.izq = self.eliminar(arbol.izq, dato)
 
     elif dato > arbol.dato:
-       arbol.der = self.eliminar(arbol.der, dato)
+      arbol.der = self.eliminar(arbol.der, dato)
+
 
     else:
+      # Caso 0. Cuando no tiene hijos
       # Caso 1: Cuando solo tiene un hijo 
+      # Caso 2: Cuando tiene dos hijos
+
       if arbol.izq is None:
         temp = arbol.der
         arbol = None
+        #print(temp.dato)
         return temp
 
       elif arbol.der is None:
         temp = arbol.izq
         arbol = None
+        #print(temp.dato)
         return temp
  
-      else:
-        # Caso 2: Cuando tiene dos hijos
-        # encontrar el sucesor en inorden
-        temp = self.sucesor(arbol.der)
-        arbol.dato = temp.dato
+      temp = self.sucesor(arbol.der)
+      arbol.dato = temp.dato
+      arbol.der = self.eliminar(arbol.der, temp.dato)
 
-          
-        arbol.der = self.eliminar(arbol.der, temp.dato)
+      # encontrar el sucesor en inorden
      
     return arbol
 
 
 
-arbolito = Arbol(20)
+arbolito = Arbol(9)
 
-arbolito.insertar(arbolito.raiz, 15)
-arbolito.insertar(arbolito.raiz, 9)
-arbolito.insertar(arbolito.raiz, 16)
-arbolito.insertar(arbolito.raiz, 24)
-arbolito.insertar(arbolito.raiz, 30)
+arbolito.insertar(arbolito.raiz, 5)
+arbolito.insertar(arbolito.raiz, 10)
+arbolito.insertar(arbolito.raiz, 1)
+arbolito.insertar(arbolito.raiz, 7)
+arbolito.insertar(arbolito.raiz, 6)
+arbolito.insertar(arbolito.raiz, 8)
+arbolito.insertar(arbolito.raiz, 12)
 
 
-print("\n\nPreorden")
+
+print("\nPreorden")
 arbolito.preorden(arbolito.raiz)
 
 print("\n\nInorden")
@@ -189,15 +203,20 @@ arbolito.postorden(arbolito.raiz)
 print("\n\nAnchura")
 arbolito.anchura(arbolito.raiz)
 
-print("\n\nNodo Raiz")
+print("\nNodo Raiz")
 arbolito.nodoRaiz(arbolito.raiz)
 
-print("\n\nNodos Hoja")
+print("\nNodos Hoja")
 arbolito.nodosHoja(arbolito.raiz)
 
 print("\n\nPeso arbol")
 print(arbolito.pesoArbol(arbolito.raiz))
 
-print("\n\nProfundidad arbol")
+print("\nProfundidad arbol")
 print(arbolito.profundidad(arbolito.raiz))
 
+print("\nEliminar nodo del arbol")
+arbolito.preorden(arbolito.raiz)
+print()
+arbolito.eliminar(arbolito.raiz, 7)
+arbolito.preorden(arbolito.raiz)
