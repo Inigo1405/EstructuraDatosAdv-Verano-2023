@@ -31,6 +31,19 @@ class Queue():
           return True if self.items else False    # if Ternarios
      
 
+     def tamaño(self):
+          return len(self.items)
+
+
+     def ubicacion(self, pos):
+          # print(self.items[pos])
+          return self.items[pos]
+
+     def insertar(self, pos, dato):
+          self.items.insert(pos, dato)
+
      def display(self):
           print(self.items)
           return self.items
+     
+
