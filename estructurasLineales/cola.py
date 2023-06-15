@@ -23,13 +23,21 @@ class Queue():
      # Eliminar (Desencolar)
      def dequeue(self):
           """Eliminar datos de la cola"""
-          return self.items.pop(0)                       # Eliminamos el primer elemento
+          if self.items:
+               return self.items.pop(0)                       # Eliminamos el primer elemento
           
 
      #Si esta vacía
      def is_empty(self):
           return True if self.items else False    # if Ternarios
      
+
+     def display(self):
+          print(self.items)
+          return self.items
+
+     def inicioCola(self):
+          return 
 
      def tamaño(self):
           return len(self.items)
@@ -40,11 +48,9 @@ class Queue():
           return self.items[pos]
 
      def insertar(self, pos, dato):
+          self.items.pop(pos)
           self.items.insert(pos, dato)
 
-     def display(self):
-          print(self.items)
-          return self.items
      
      def ordenamiento(self):
           n = len(self.items)
@@ -56,3 +62,14 @@ class Queue():
                          self.items[j+1] = tmp
           
           return self.items
+
+     
+
+     def buscarDato(self, lista, dato):
+          if lista:
+               for i in range(len(self.items)):
+                    if self.items[i] == dato:
+                         print(f"El dato se encontro en la posición: {i} en el ciclo {i+1}")
+                         
+          else:
+               return None
