@@ -4,10 +4,6 @@ import random
 # Ordenamiento de datos de menor a mayor
 # 14/06/2023
 
-class Burbuja(Queue):
-    
-    def insertar(self, pos, dato):
-        self.items.append(pos, dato)
 
 
 def burbuja(lista):
@@ -33,6 +29,7 @@ for i in range(15):
 
 arr.display()
 #Burbuja(arr)
-burbuja(arr)
+#burbuja(arr)
+arr.ordenamiento()
 arr.display()
 

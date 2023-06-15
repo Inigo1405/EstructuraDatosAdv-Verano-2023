@@ -46,4 +46,13 @@ class Queue():
           print(self.items)
           return self.items
      
-
+     def ordenamiento(self):
+          n = len(self.items)
+          for i in range(n-1):
+               for j in range(n-1):
+                    if self.items[j] > self.items[j+1]:
+                         tmp = self.items[j]
+                         self.items[j] = self.items[j+1]
+                         self.items[j+1] = tmp
+          
+          return self.items
