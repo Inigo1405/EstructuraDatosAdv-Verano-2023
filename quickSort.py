@@ -38,6 +38,10 @@ def partition(lista):
      
 
 
+
+
+
+
 # -- Main --
 arr = list()
 for i in range(10):
@@ -46,8 +50,5 @@ for i in range(10):
 
 
 print(arr)
-
-array2 = partition(arr)
-print(array2)
-
+print(partition(arr))
 

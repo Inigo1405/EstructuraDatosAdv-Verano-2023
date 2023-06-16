@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
+
 def on_button_click():
     print("¡Botón presionado!")
 
