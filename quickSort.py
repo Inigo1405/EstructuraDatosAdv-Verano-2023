@@ -1,6 +1,7 @@
 import random
 
-# Dividir y conquistar
+# Dividir 
+# Conquistar
 
 mayores=list()
 iguales=list()
@@ -8,9 +9,11 @@ menores=list()
 
 def partition(lista):
      if lista:
+          #! Dividir
           for i in lista:
-               if i > lista[p]:
+               if i > lista[p] and lista:
                     mayores.append(i)
+                    
 
                elif i < lista[p]:
                     menores.append(i)
@@ -21,9 +24,14 @@ def partition(lista):
           print(menores)
           print(iguales)
           print(mayores)
+          #print(lista)
 
-          #p =  random.randint(0, len(lista)-1)
-          #partition(menores, p)
+          #! Conquistar 
+
+          # p =  random.randint(0, len(lista)-1)
+          # partition(menores, p)
+          #return  lista
+
      # partition(iguales)
      # partition(mayores)
 
