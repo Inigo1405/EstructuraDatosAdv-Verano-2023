@@ -10,7 +10,7 @@ def partition(lista):
           mayores=list()
           iguales=list()
           menores=list()
-          p =  random.randint(0, len(arr)-1)
+          p =  random.randint(0, len(lista)-1)
 
           #! Dividir
           for i in lista:
@@ -20,46 +20,34 @@ def partition(lista):
                elif i < lista[p]:
                     menores.append(i)
 
-               elif i == lista[p]:
+               else:
                     iguales.append(i)
 
-          #print(menores)
-          #print(iguales)
-          #print(mayores)
-          #print(lista)
 
+          # print(menores)
+          # print(iguales)
+          # print(mayores)
+          # print(lista)
 
-          # p =  random.randint(0, len(lista)-1)
-          # partition(menores, p)
-         
-         
-          # partition(iguales)
-          # partition(mayores)
-         
-          return menores, iguales, mayores
+         #! Ordena con recursión
+          return partition(menores) + [iguales] + partition(mayores) 
+
 
      else: 
-          return []
-     
-
-
-def sort(lista):
-     #! Ordenar
-     if len(lista) <= 1:
           return lista
      
-     menores, iguales, mayores = partition(lista)
-     return partition(menores) + [iguales] + partition(mayores)
 
 
+# -- Main --
 arr = list()
 for i in range(10):
      num = random.randint(0, 50)
      arr.append(num)
 
 
-#print(arr[p])
 print(arr)
 
-#partition(arr)
-sort(arr)
+array2 = partition(arr)
+print(array2)
+
+
