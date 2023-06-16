@@ -69,7 +69,7 @@ class Queue():
           if lista:
                for i in range(len(self.items)):
                     if self.items[i] == dato:
-                         print(f"El dato se encontro en la posición: {i} en el ciclo {i+1}")
+                         print(f"El dato en la posición: {i} en el ciclo {i+1}")
                          
           else:
                return None
