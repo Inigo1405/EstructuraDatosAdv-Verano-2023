@@ -30,7 +30,7 @@ def partition(lista):
           # print(lista)
 
          #! Ordena con recursión
-          return partition(menores) + [iguales] + partition(mayores) 
+          return partition(menores) + iguales + partition(mayores) 
 
 
      else: 

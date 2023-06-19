@@ -58,7 +58,7 @@ def partition(lista):
           # print(lista)
 
          #! Ordena con recursion
-          return partition(menores) + [iguales] + partition(mayores) 
+          return partition(menores) + iguales + partition(mayores) 
 
      else: 
           return lista
@@ -129,8 +129,8 @@ while fin == False:
      #Ordenar lista
      elif opc == 2:
           if arr:
-               #arr = partition(arr)
-               arr = burbuja(arr)
+               arr = partition(arr)
+               #arr = burbuja(arr)
                print(arr)
 
           else:
