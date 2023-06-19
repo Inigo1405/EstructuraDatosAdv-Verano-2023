@@ -27,3 +27,6 @@ def busquedaBinaria(lista, dato):
 arr2 = [1,3,5,6,7,8,9,10]
 print(arr2)
 busquedaBinaria(arr2, 9)
+
+
+
