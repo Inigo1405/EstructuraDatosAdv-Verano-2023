@@ -1,12 +1,12 @@
 # Iñigo Quintana Delgadillo
 # 18/06/2023
 
-
 # Modificar gran parte del código para que tenga un menu para que el usuario 
 # diga cuantos datos quiere, que se ordene la lista, 
 # y pedirle al usuario el dato que quiere encontrar
 
 import random
+
 
 def busquedaBinaria(lista, dato):
      i = 0
@@ -52,7 +52,6 @@ def partition(lista):
                else:
                     iguales.append(i)
 
-
           # print(menores)
           # print(iguales)
           # print(mayores)
@@ -61,16 +60,9 @@ def partition(lista):
          #! Ordena con recursion
           return partition(menores) + [iguales] + partition(mayores) 
 
-
      else: 
           return lista
 
-
-def menu():
-     print("\n1. Número de datos en el arreglo")
-     print("2. Ordenar datos del arreglo")
-     print("3. Buscar dato deseado")
-     print("4. Fin del programa")
 
 
 def crearLista():
@@ -88,36 +80,57 @@ def crearLista():
           num = random.randint(0, 50)
           arr.append(num)
 
-
-     p =  random.randint(0, len(arr)-1)
-     #print(arr[p])
-     print(arr)
-     #partition(arr)
      return arr
+
+
+
+def burbuja(lista):
+     n = len(lista)
+     for i in range(n-1):
+          for j in range(n-1):
+               if lista[j] > lista[j+1]:
+                    tmp = lista[j]
+                    lista[j] = lista[j+1]
+                    lista[j+1] = tmp
+
+     return lista
+
+
+
+def menu():
+     print("\n1. Número de datos en el arreglo")
+     print("2. Ordenar datos del arreglo")
+     print("3. Buscar dato deseado")
+     print("4. Fin del programa")
+
+     opc = None
+     while type(opc) != int:
+          try:
+               opc = int(input("Ingresa la opción deseada: "))
+          except:
+               print("Ingresa un número, por favor")
+
+     return opc
 
 
 
 # -- Menu -- 
 fin = False
-opc = None
 arr = None
 
 while fin == False:
-     menu()
-
-     try:
-          opc = int(input("Ingresa la opción deseada: "))
-     except:
-          print("Ingresa un número")
+     opc = menu()
      
      #Crear lista
      if opc == 1:
           arr = crearLista()
+          print(arr)
      
      #Ordenar lista
      elif opc == 2:
           if arr:
-               arr = partition(arr)
+               #arr = partition(arr)
+               arr = burbuja(arr)
                print(arr)
 
           else:
@@ -136,7 +149,5 @@ while fin == False:
      #Terminar programa
      elif opc == 4:
           fin = True
-
-
-
+          print("\nSaliste del programa!")
 
