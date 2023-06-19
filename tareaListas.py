@@ -99,9 +99,10 @@ def burbuja(lista):
 
 def menu():
      print("\n1. Número de datos en el arreglo")
-     print("2. Ordenar datos del arreglo")
-     print("3. Buscar dato deseado")
-     print("4. Fin del programa")
+     print("2. Ordenar datos del arreglo con quickSort")
+     print("3. Ordenar datos del arreglo con Burbuja")
+     print("4. Buscar dato deseado")
+     print("5. Fin del programa")
 
      opc = None
      while type(opc) != int:
@@ -126,18 +127,29 @@ while fin == False:
           arr = crearLista()
           print(arr)
      
-     #Ordenar lista
+
+     #Ordenar lista con quickSort
      elif opc == 2:
           if arr:
                arr = partition(arr)
-               #arr = burbuja(arr)
+               print(arr)
+
+          else:
+               print("La lista no existe!")
+    
+
+     #Ordenar lista con burbuja
+     elif opc == 3:
+          if arr:
+               arr = burbuja(arr)
                print(arr)
 
           else:
                print("La lista no existe!")
 
+
      #Buscar dato
-     elif opc == 3:
+     elif opc == 4:
           if arr:
                print(arr)
                dato = int(input("Ingresa el dato a buscar: "))
@@ -146,8 +158,9 @@ while fin == False:
           else:
                print("La lista no existe!")
 
+
      #Terminar programa
-     elif opc == 4:
+     elif opc == 5:
           fin = True
           print("\nSaliste del programa!")
 
