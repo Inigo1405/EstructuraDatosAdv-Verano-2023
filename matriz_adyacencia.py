@@ -9,7 +9,7 @@ class Grafo:
     def mostrar(self):
         for i in self.matriz:
             for j in i:
-                print(j, end=' ')
+                print(j, end='  ')
             print()
 
     #TODO
@@ -17,31 +17,48 @@ class Grafo:
         x = coords[0]
         y = coords[1]
 
-        # for i in range(self.size):
-        #     for j in range(self.size):
-        #         if i == x and j == y:
-        #             self.matriz[i-1][j-1] = 1
-        
-
-        # for i in range(self.size):
-        #     for j in range(self.size):
-        #         if i == x and j == y:
-        #             self.matriz[j-1][i-1] = 1
-
-        if x == y:
-            print("No se puede en la diagonal")
-
-        else:
+        if x > 0 and y > 0:
             self.matriz[x-1][y-1] = 1
             self.matriz[y-1][x-1] = 1
-        
-            
 
+        else:
+            print("No se puede añadir en esta ubicación")
+
+            
+    def eliminarAdyacente(self, coords:tuple):
+        x = coords[0]
+        y = coords[1]
+
+        if x > 0 and y > 0 and self.matriz[x-1][y-1] == 1 and self.matriz[y-1][x-1] == 1:
+            self.matriz[x-1][y-1] = 0
+            self.matriz[y-1][x-1] = 0
+
+        else:
+            print("No se puede eliminar en esta ubicación")
 
 g = Grafo(8)
 #g.mostrar()
 
-coords = (1,2)
-g.insertarAdyacente(coords)
+g.insertarAdyacente((1,2))
+g.insertarAdyacente((1,3))
+
+g.insertarAdyacente((2,3))
+g.insertarAdyacente((2,4))
+g.insertarAdyacente((2,5))
+
+g.insertarAdyacente((3,5))
+g.insertarAdyacente((3,8))
+
+g.insertarAdyacente((4,5))
+
+g.insertarAdyacente((5,6))
+
+g.insertarAdyacente((7,8))
+
+
+
+g.mostrar()
 print()
+
+g.eliminarAdyacente((8,7))
 g.mostrar()
