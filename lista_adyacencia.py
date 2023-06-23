@@ -32,8 +32,7 @@ class Graph:
         keys = self.graph.keys()
 
         if v in keys and w in keys:
-            #for i in range(2):
-            #Agregar en diccionario vacío
+            #*Agregar en diccionario vacío
             if self.graph[v] == []:
                 self.graph[v] = Node(w)
 
@@ -42,7 +41,7 @@ class Graph:
                 self.graph[w] = Node(v)
                 
                 
-            #Agregar diccionario existente
+            #*Agregar diccionario existente
             if self.graph[v] != []:
                 #print(self.graph[v].vertex)
                 ultimo_nodo = self.graph[v]
@@ -53,8 +52,7 @@ class Graph:
                 if ultimo_nodo.vertex != w:
                     ultimo_nodo.next = Node(w)
 
-
-            #Agregar diccionario existente
+            
             if self.graph[w] != []:
                 ultimo_nodo = self.graph[w]
 
@@ -65,6 +63,7 @@ class Graph:
                     ultimo_nodo.next = Node(v)
 
 
+            #*Mostrar datos de la llave
             print(self.graph)
             x = self.graph[v]
 
