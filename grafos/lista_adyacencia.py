@@ -1,6 +1,6 @@
 #Buen código es en inglés
 #22/06/2023
-import threading
+from cola import Queue
 
 
 class Node:
@@ -64,30 +64,71 @@ class Graph:
 
 
             #*Mostrar datos de la llave
-            print(self.graph)
+            #print(self.graph)
             x = self.graph[v]
 
             while x != None:
-                print(x.vertex)
+                #print(x.vertex)
                 x = x.next
             
+
+    def recorrido(self, inicial, visitados=list(), nodos=Queue()):
+        keys = self.graph.keys()
+        if inicial in keys:
+
+            if inicial not in visitados:
+                visitados.append(inicial)
+
+
+            x = self.graph[inicial]
+            while x != None:
+                if x.vertex not in nodos.datos() and x.vertex not in visitados:
+                    nodos.enqueue(x.vertex)
+                x = x.next
+
+            print("\nCola:", end='')
+            nodos.display()
+
+            print("Visitados:", end='')
+            print(visitados)
+
+            self.recorrido(nodos.dequeue(), visitados, nodos)
+            
+        else: 
+            print("No se encontró el nodo")
 
 
 
 #? -- Main --
 
-g = Graph(5)
-g.add_vertex('A')
-g.add_vertex('B')
-g.add_vertex('C')
-g.add_vertex('D')
-g.add_vertex('E')
+g = Graph(7)
+# g.add_vertex('A')
+# g.add_vertex('B')
+# g.add_vertex('C')
+# g.add_vertex('D')
+# g.add_vertex('E')
+g.add_vertex(1)
+g.add_vertex(2)
+g.add_vertex(3)
+g.add_vertex(4)
+g.add_vertex(5)
+g.add_vertex(6)
+g.add_vertex(7)
+
+# g.add_edge('A', 'B')
+# g.add_edge('A', 'C')
+# g.add_edge('A', 'D')
+g.add_edge(1, 2)
+g.add_edge(1, 4)
+g.add_edge(2, 3)
+g.add_edge(2, 5)
+g.add_edge(3, 4)
+g.add_edge(3, 6)
+g.add_edge(4, 7)
+g.add_edge(6, 7)
+g.add_edge(5, 6)
 
 
-g.add_edge('A', 'B')
-g.add_edge('A', 'C')
-g.add_edge('A', 'D')
-
-
-
+print("\nRecorrido")
+g.recorrido(1)
 
