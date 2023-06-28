@@ -1,7 +1,7 @@
 #Buen código es en inglés
 #22/06/2023
 from cola import Queue
-
+from pila import Pila
 
 class Node:
     def __init__(self, data):
@@ -81,13 +81,53 @@ class Graph:
                     nodos.enqueue(x.vertex)
                 x = x.next
 
-            print("\nCola:", end='')
+            print("\nCola: ", end='')
             nodos.display()
 
-            print("Visitados:", end='')
+            print("Visitados: ", end='')
             print(visitados)
 
             self.recorrido(nodos.dequeue(), visitados, nodos)
+            
+        else: 
+            print("No se encontró el nodo")
+
+
+
+
+    def recorridoNivel(self, inicial, visitados=list(), nodos=list()):
+        if inicial in self.keys:
+        
+            if inicial not in visitados:
+                visitados.append(inicial)
+
+            
+            x = self.graph[inicial]
+
+            if nodos == []:
+                while x != None:
+                    if x.vertex not in nodos and x.vertex not in visitados:
+                        nodos.append(x.vertex)
+                    x = x.next
+
+            else:
+                while x != None:
+                    if x.vertex not in nodos and x.vertex not in visitados:
+                        nodos.insert(0, x.vertex)
+                    x = x.next
+
+
+            print("\nCola: ", end='')
+            print(nodos)
+
+
+            print("Visitados: ", end='')
+            print(visitados)
+
+            if nodos: 
+                x = nodos.pop(0)
+                
+            self.recorridoNivel(x, visitados, nodos)
             
         else: 
             print("No se encontró el nodo")
@@ -111,35 +151,29 @@ class Graph:
 
 #? -- Main --
 
-g = Graph(7)
-# g.add_vertex('A')
-# g.add_vertex('B')
-# g.add_vertex('C')
-# g.add_vertex('D')
-# g.add_vertex('E')
+g = Graph(5)
+
+
+g.add_vertex(0)
 g.add_vertex(1)
 g.add_vertex(2)
 g.add_vertex(3)
 g.add_vertex(4)
-g.add_vertex(5)
-g.add_vertex(6)
-g.add_vertex(7)
 
-# g.add_edge('A', 'B')
-# g.add_edge('A', 'C')
-# g.add_edge('A', 'D')
-g.add_edge(1, 2)
-g.add_edge(1, 4)
-g.add_edge(2, 3)
-g.add_edge(2, 5)
-g.add_edge(3, 4)
-g.add_edge(3, 6)
-g.add_edge(4, 7)
-g.add_edge(6, 7)
-g.add_edge(5, 6)
+
+
+g.add_edge(0, 1)
+g.add_edge(0, 2)
+g.add_edge(0, 3)
+g.add_edge(2, 1)
+g.add_edge(2, 4)
+
 
 
 print("\nRecorrido")
-g.recorrido(1)
+g.recorrido(0)
 
-g.display(1)
+print("\n\nRecorrido Nivel")
+
+g.recorridoNivel(0)
+
