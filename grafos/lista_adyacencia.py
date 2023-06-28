@@ -1,7 +1,6 @@
 #Buen código es en inglés
 #22/06/2023
 from cola import Queue
-from pila import Pila
 
 class Node:
     def __init__(self, data):
@@ -13,7 +12,7 @@ class Graph:
     def __init__(self, size):
         self.size = size #Tamaño del gráfico
         self.graph = {}
-        self.keys = []
+        self.keys = [] #Nodos enm
         # print(self.graph)
         
     def add_vertex(self, data):
@@ -25,7 +24,6 @@ class Graph:
             print("Ya no se puede!")
 
         print(self.graph)
-        
 
 
     def add_edge(self, v , w):
@@ -61,19 +59,15 @@ class Graph:
 
                 if ultimo_nodo.vertex != v:
                     ultimo_nodo.next = Node(v)
-
-
            
             
 
     def recorrido(self, inicial, visitados=list(), nodos=Queue()):
         """Recorrido del grafo en  forma de DFS"""
-
         if inicial in self.keys:
 
             if inicial not in visitados:
                 visitados.append(inicial)
-
 
             x = self.graph[inicial]
             while x != None:
@@ -94,16 +88,13 @@ class Graph:
 
 
 
-
     def recorridoNivel(self, inicial, visitados=list(), nodos=list()):
         if inicial in self.keys:
         
             if inicial not in visitados:
                 visitados.append(inicial)
 
-            
             x = self.graph[inicial]
-
             if nodos == []:
                 while x != None:
                     if x.vertex not in nodos and x.vertex not in visitados:
@@ -116,18 +107,14 @@ class Graph:
                         nodos.insert(0, x.vertex)
                     x = x.next
 
-
             print("\nCola: ", end='')
             print(nodos)
-
 
             print("Visitados: ", end='')
             print(visitados)
 
             if nodos: 
-                x = nodos.pop(0)
-                
-            self.recorridoNivel(x, visitados, nodos)
+                self.recorridoNivel(nodos.pop(0), visitados, nodos)
             
         else: 
             print("No se encontró el nodo")
@@ -177,3 +164,5 @@ print("\n\nRecorrido Nivel")
 
 g.recorridoNivel(0)
 
+#TODO Bombardeen Tijuana 
+#todo bungou stray dogs
