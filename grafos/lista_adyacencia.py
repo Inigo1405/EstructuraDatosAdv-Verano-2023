@@ -13,25 +13,25 @@ class Graph:
     def __init__(self, size):
         self.size = size #Tamaño del gráfico
         self.graph = {}
+        self.keys = []
         # print(self.graph)
         
     def add_vertex(self, data):
         if data not in self.graph and len(g.graph) < self.size:
             self.graph[data] = []
+            self.keys.append(data)
             
         else:
             print("Ya no se puede!")
 
         print(self.graph)
-        return self.graph.keys()
         
 
 
     def add_edge(self, v , w):
         #TODO: insertar lista adyacentes
-        keys = self.graph.keys()
 
-        if v in keys and w in keys:
+        if v in self.keys and w in self.keys:
             #*Agregar en diccionario vacío
             if self.graph[v] == []:
                 self.graph[v] = Node(w)
@@ -63,18 +63,13 @@ class Graph:
                     ultimo_nodo.next = Node(v)
 
 
-            #*Mostrar datos de la llave
-            #print(self.graph)
-            x = self.graph[v]
-
-            while x != None:
-                #print(x.vertex)
-                x = x.next
+           
             
 
     def recorrido(self, inicial, visitados=list(), nodos=Queue()):
-        keys = self.graph.keys()
-        if inicial in keys:
+        """Recorrido del grafo en  forma de DFS"""
+
+        if inicial in self.keys:
 
             if inicial not in visitados:
                 visitados.append(inicial)
@@ -96,6 +91,21 @@ class Graph:
             
         else: 
             print("No se encontró el nodo")
+
+
+
+    def display(self, key):
+        if key in self.keys:
+            
+            print(f"\nEl nodo {key} conecta con: ", end='')
+            x = self.graph[key]
+
+            while x != None:
+                print(x.vertex, end=' ')
+                x = x.next
+
+        else:
+            print("\nNo se encuentra la llave :(")
 
 
 
@@ -132,3 +142,4 @@ g.add_edge(5, 6)
 print("\nRecorrido")
 g.recorrido(1)
 
+g.display(1)
