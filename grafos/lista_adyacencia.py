@@ -1,14 +1,15 @@
 #Buen código es en inglés
 #22/06/2023
 
-#from cola import Queue
-from ..estructurasLineales.cola import Queue
+from cola import Queue
+#from ..estructurasLineales.cola import Queue
 
 
 class Node:
-    def __init__(self, data):
+    def __init__(self, data, weight=0):
         self.vertex = data
         self.next = None
+        self.weight = weight
 
 
 class Graph:
@@ -29,17 +30,17 @@ class Graph:
         print(self.graph)
 
 
-    def add_edge(self, v , w):
+    def add_edge(self, v , w, weight=0):
         #TODO: insertar lista adyacentes
 
         if v in self.keys and w in self.keys:
             #*Agregar en diccionario vacío
             if self.graph[v] == []:
-                self.graph[v] = Node(w)
+                self.graph[v] = Node(w, weight)
 
 
             if self.graph[w] == []:   
-                self.graph[w] = Node(v)
+                self.graph[w] = Node(v, weight)
                 
                 
             #*Agregar diccionario existente
@@ -51,7 +52,7 @@ class Graph:
                     ultimo_nodo = ultimo_nodo.next
 
                 if ultimo_nodo.vertex != w:
-                    ultimo_nodo.next = Node(w)
+                    ultimo_nodo.next = Node(w, weight)
 
             
             if self.graph[w] != []:
@@ -61,7 +62,7 @@ class Graph:
                     ultimo_nodo = ultimo_nodo.next
 
                 if ultimo_nodo.vertex != v:
-                    ultimo_nodo.next = Node(v)
+                    ultimo_nodo.next = Node(v, weight)
            
             
 
@@ -111,7 +112,7 @@ class Graph:
                         nodos.insert(0, x.vertex)
                     x = x.next
 
-            print("\nCola: ", end='')
+            print("\nFila: ", end='')
             print(nodos)
 
             print("Visitados: ", end='')
@@ -138,7 +139,8 @@ class Graph:
         else:
             print("\nNo se encuentra la llave :(")
 
-
+    
+        
 
 #? -- Main --
 
@@ -164,9 +166,10 @@ g.add_edge(2, 4)
 print("\nRecorrido")
 g.recorrido(0)
 
-print("\n\nRecorrido Nivel")
 
+print("\n\nRecorrido Nivel")
 g.recorridoNivel(0)
 
 #TODO Bombardeen Tijuana 
 #todo bungou stray dogs
+# ToDo Dijkstra
