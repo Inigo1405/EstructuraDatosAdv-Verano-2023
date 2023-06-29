@@ -1,6 +1,9 @@
 #Buen código es en inglés
 #22/06/2023
-from cola import Queue
+
+#from cola import Queue
+from ..estructurasLineales.cola import Queue
+
 
 class Node:
     def __init__(self, data):
