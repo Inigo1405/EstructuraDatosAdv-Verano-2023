@@ -36,8 +36,8 @@ class Queue():
           print(self.items)
           return self.items
 
-     def inicioCola(self):
-          return 
+     def datos(self):
+          return self.items
 
      def tamaño(self):
           return len(self.items)
