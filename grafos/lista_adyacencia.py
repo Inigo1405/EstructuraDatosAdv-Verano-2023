@@ -92,6 +92,7 @@ class Graph:
 
 
     def recorridoNivel(self, inicial, visitados=list(), nodos=list()):
+        """Recorrido del grafo en  forma de BFS"""
         if inicial in self.keys:
         
             if inicial not in visitados:
