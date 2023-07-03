@@ -72,7 +72,7 @@ class Graph:
 
 
     def recorrido(self, inicial, visitados=list(), nodos=Queue()):
-        """Recorrido del grafo en  forma de DFS"""
+        """Recorrido del grafo en forma de BFS"""
         if inicial in self.keys:
 
             if inicial not in visitados:
@@ -97,37 +97,23 @@ class Graph:
 
 
 
-    def recorridoNivel(self, inicial, visitados=list(), nodos=list()):
-        """Recorrido del grafo en  forma de BFS"""
+    def recorridoRecursivo(self, inicial, visitados=[]):
+        """Recorrido del grafo en forma de DFS"""
         if inicial in self.keys:
-        
-            if inicial not in visitados:
-                visitados.append(inicial)
-
+            visitados.append(inicial)
+            print(visitados) 
             x = self.graph[inicial]
-            if nodos == []:
-                while x != None:
-                    if x.vertex not in nodos and x.vertex not in visitados:
-                        nodos.append(x.vertex)
-                    x = x.next
-
+            
+            if x.vertex not in visitados:
+                self.recorridoRecursivo(x.vertex, visitados)
+            
             else:
                 while x != None:
-                    if x.vertex not in nodos and x.vertex not in visitados:
-                        nodos.insert(0, x.vertex)
+                    if x.vertex not in visitados:
+                        self.recorridoRecursivo(x.vertex, visitados)
                     x = x.next
 
-            print("\nFila: ", end='')
-            print(nodos)
-
-            print("Visitados: ", end='')
-            print(visitados)
-
-            if nodos: 
-                self.recorridoNivel(nodos.pop(0), visitados, nodos)
             
-        else: 
-            print("No se encontró el nodo")
 
 
 
@@ -221,6 +207,7 @@ print("\nRecorrido")
 
 print("\n\nRecorrido Nivel")
 #g.recorridoNivel('A')
+g.recorridoRecursivo('A')
 
 print()
 g.mostrar()
