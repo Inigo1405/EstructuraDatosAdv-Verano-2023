@@ -144,31 +144,63 @@ class Graph:
 
 #? -- Main --
 
-g = Graph(5)
+g = Graph(9)
 
 
-g.add_vertex(0)
-g.add_vertex(1)
-g.add_vertex(2)
-g.add_vertex(3)
-g.add_vertex(4)
+# g.add_vertex(0)
+# g.add_vertex(1)
+# g.add_vertex(2)
+# g.add_vertex(3)
+# g.add_vertex(4)
+
+g.add_vertex('A')
+g.add_vertex('B')
+g.add_vertex('C')
+g.add_vertex('D')
+g.add_vertex('E')
+g.add_vertex('F')
+g.add_vertex('G')
+g.add_vertex('H')
+g.add_vertex('I')
 
 
 
-g.add_edge(0, 1)
-g.add_edge(0, 2)
-g.add_edge(0, 3)
-g.add_edge(2, 1)
-g.add_edge(2, 4)
+g.add_edge('A','B')
+g.add_edge('A','D')
+g.add_edge('A','G')
+
+g.add_edge('B','C')
+g.add_edge('B','G')
+
+g.add_edge('C','I')
+g.add_edge('C','H')
+
+g.add_edge('D','E')
+g.add_edge('D','G')
+
+g.add_edge('E','F')
+g.add_edge('E','G')
+
+g.add_edge('F','H')
+g.add_edge('F','I')
+
+g.add_edge('I','H')
 
 
+# g.add_edge(0, 1)
+# g.add_edge(0, 2)
+# g.add_edge(0, 3)
+# g.add_edge(2, 1)
+# g.add_edge(2, 4)
+
+g.display('C')
 
 print("\nRecorrido")
-g.recorrido(0)
+g.recorrido('A')
 
 
 print("\n\nRecorrido Nivel")
-g.recorridoNivel(0)
+g.recorridoNivel('A')
 
 #TODO Bombardeen Tijuana 
 #todo bungou stray dogs

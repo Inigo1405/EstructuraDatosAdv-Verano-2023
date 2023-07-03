@@ -13,7 +13,8 @@ root.geometry("600x500")
 username = tk.StringVar()
 pila= Pila()
 pila.push('Iñigo')
-pila.push(8)
+pila.push(14)
+pila.push(5)
 
 
 
