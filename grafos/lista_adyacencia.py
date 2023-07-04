@@ -113,13 +113,10 @@ class Graph:
                         self.recorridoRecursivo(x.vertex, visitados)
                     x = x.next
 
-            
-
 
 
     def display(self, key):
         if key in self.keys:
-            
             print(f"\n{key} : ", end='')
             x = self.graph[key]
 
@@ -129,6 +126,7 @@ class Graph:
 
         else:
             print("\nNo se encuentra la llave :(")
+
 
 
     def matrizPeso(self, v, w, peso):
@@ -143,11 +141,12 @@ class Graph:
             print("No se puede añadir en esta ubicación")
 
 
+
     def mostrar(self):
         print(self.keys)
         for i in self.matriz:
             for j in i:
-                print(j, end='  ')
+                print(j, end='   ')
             print()
 
 
@@ -168,26 +167,26 @@ g.add_vertex('I')
 
 
 
-g.add_edge('A','B')
-g.add_edge('A','D')
-g.add_edge('A','G')
+g.add_edge('A','B', 3)
+g.add_edge('A','D', 1)
+g.add_edge('A','G', 1)
 
 g.add_edge('B','C', 8)
-g.add_edge('B','G')
+g.add_edge('B','G', 6)
 
-g.add_edge('C','H')
-g.add_edge('C','I')
+g.add_edge('C','H', 7)
+g.add_edge('C','I', 1)
 
-g.add_edge('D','E')
-g.add_edge('D','G')
+g.add_edge('D','E', 10)
+g.add_edge('D','G', 3)
 
-g.add_edge('E','F')
-g.add_edge('E','G')
+g.add_edge('E','F', 2)
+g.add_edge('E','G', 9)
 
-g.add_edge('F','H')
-g.add_edge('F','I')
+g.add_edge('F','H', 5)
+g.add_edge('F','I', 8)
 
-g.add_edge('I','H')
+g.add_edge('I','H', 6)
 
 
 
@@ -202,11 +201,10 @@ g.display('H')
 g.display('I')
 
 print("\nRecorrido")
-#g.recorrido('A')
+g.recorrido('A')
 
 
 print("\n\nRecorrido Nivel")
-#g.recorridoNivel('A')
 g.recorridoRecursivo('A')
 
 print()
