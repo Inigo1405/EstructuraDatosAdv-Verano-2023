@@ -20,7 +20,7 @@ class Graph:
         self.matriz = np.array([[0 for j in range(size)] for i in range(size)])
         # print(self.graph)
         
-
+    
     def add_vertex(self, data):
         if data not in self.graph and len(g.graph) < self.size:
             self.graph[data] = []
@@ -143,11 +143,15 @@ class Graph:
 
 
     def mostrar(self):
-        print(self.keys)
-        for i in self.matriz:
-            for j in i:
-                print(j, end='   ')
+        for i in self.keys:
+            print("", i, end=' ')
+        
+        max_len = len(str(np.max(self.matriz)))
+        
+        for row in self.matriz:
             print()
+            for num in row:
+                print("{:>{}}".format(num, max_len), end=' ')
 
 
 
