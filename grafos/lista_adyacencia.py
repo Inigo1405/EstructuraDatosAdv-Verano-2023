@@ -1,6 +1,6 @@
 #Buen código es en inglés
 #22/06/2023
-
+import time
 from cola import Queue
 import numpy as np
 #from ..estructurasLineales.cola import Queue
@@ -152,16 +152,62 @@ class Graph:
 
 
 
-    def dijkstra(self, inicio, fin, visitados=[]):
+    def dijkstra(self, inicio, fin, visitados=[], peso=0, visitadosPos=[]):
         if inicio in self.keys and fin in self.keys:
             
-            pass
-    
+            visitados.append(inicio)
+            visitadosPos.append(self.keys.index(inicio))
 
+            print()
+            print(visitados)
+            print("Peso: ", peso)
+
+            if inicio == fin:
+                return
+
+            row = self.keys.index(inicio)
+            print(self.matriz[row]) 
+
+            x = 0
+            for i in range(self.size):
+                if x == 0:
+                    if i not in visitadosPos:
+                        x = self.matriz[row][i]
+                        pos = i
+                    
+                
+                elif self.matriz[row][i] < x and self.matriz[row][i] != 0:
+                    if self.keys[pos] not in visitados and i not in visitadosPos:
+                        x = self.matriz[row][i]
+                        pos = i
+                
+            
+            print("Pos: ", pos)
+            print("Min: ", x)
+            print("Letra: ", self.keys[pos])
+            
+            time.sleep(2)
+            self.dijkstra(self.keys[pos], fin, visitados, peso + x, visitadosPos)
+
+            return visitados, peso
+            
+
+
+def menu():
+    # opc = int(input("Ingresa una opción"))
+    print("1. Conexiones de los nodos")
+    print("2. Recorrido BFS")
+    print("3. Recorrido DFS")
+    print("4. Mostrar matriz de pesos")
+    print("5. Recorrido Dijkstra")
+
+
+            
 
 #? -- Main --
 
 g = Graph(9)
+# g = Graph(6)
 
 g.add_vertex('A')
 g.add_vertex('B')
@@ -197,9 +243,22 @@ g.add_edge('F','I', 8)
 g.add_edge('I','H', 6)
 
 
+# g.add_edge('A', 'B', 4)
+# g.add_edge('A', 'C', 2)
+# g.add_edge('B', 'C', 1)
+# g.add_edge('B', 'D', 5)
+# g.add_edge('C', 'D', 8)
+# g.add_edge('C', 'E', 10)
+# g.add_edge('D', 'E', 2)
+# g.add_edge('D', 'F', 6)
+# g.add_edge('E', 'F', 2)
+
+
+
 for i in g.keys:
     g.display(i)
     
+
 
 print("\nRecorrido")
 g.recorrido('A')
@@ -217,7 +276,7 @@ print()
 print()
 
 print("Recorrido Dijkstra")
-g.dijkstra('A', 'I')
+g.dijkstra('A', 'E')
 
 # ToDo Bombardeen Tijuana 
 # ToDo bungou stray dogs
@@ -228,3 +287,5 @@ g.dijkstra('A', 'I')
 #* GUI en python => Canvas, PyQt5
 # Canvas, para grafos personalizados 
 # Una estructura con los nombres de los nods: [A,B,C, ...] , [1,2,2, ...]
+
+
