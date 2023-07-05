@@ -188,11 +188,18 @@ class Graph:
             
             time.sleep(2)
             self.dijkstra(self.keys[pos], fin, visitados, peso + x, visitadosPos)
+
+            return visitados, peso
             
 
 
 def menu():
-    pass
+    # opc = int(input("Ingresa una opción"))
+    print("1. Conexiones de los nodos")
+    print("2. Recorrido BFS")
+    print("3. Recorrido DFS")
+    print("4. Mostrar matriz de pesos")
+    print("5. Recorrido Dijkstra")
 
 
             
