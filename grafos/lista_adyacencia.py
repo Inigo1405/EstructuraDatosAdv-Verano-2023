@@ -91,9 +91,6 @@ class Graph:
             print(visitados)
 
             self.recorrido(nodos.dequeue(), visitados, nodos)
-            
-        else: 
-            print("No se encontró el nodo")
 
 
 
@@ -142,7 +139,7 @@ class Graph:
 
 
 
-    def mostrar(self):
+    def displayMatrix(self):
         for i in self.keys:
             print("", i, end=' ')
         
@@ -153,6 +150,13 @@ class Graph:
             for num in row:
                 print("{:>{}}".format(num, max_len), end=' ')
 
+
+
+    def dijkstra(self, inicio, fin, visitados=[]):
+        if inicio in self.keys and fin in self.keys:
+            
+            pass
+    
 
 
 #? -- Main --
@@ -193,16 +197,9 @@ g.add_edge('F','I', 8)
 g.add_edge('I','H', 6)
 
 
-
-g.display('A')
-g.display('B')
-g.display('C')
-g.display('D')
-g.display('E')
-g.display('F')
-g.display('G')
-g.display('H')
-g.display('I')
+for i in g.keys:
+    g.display(i)
+    
 
 print("\nRecorrido")
 g.recorrido('A')
@@ -212,8 +209,22 @@ print("\n\nRecorrido Nivel")
 g.recorridoRecursivo('A')
 
 print()
-g.mostrar()
+g.displayMatrix()
+
+
+print()
+print()
+print()
+
+print("Recorrido Dijkstra")
+g.dijkstra('A', 'I')
 
 # ToDo Bombardeen Tijuana 
 # ToDo bungou stray dogs
 # ToDo Dijkstra
+
+
+
+#* GUI en python => Canvas, PyQt5
+# Canvas, para grafos personalizados 
+# Una estructura con los nombres de los nods: [A,B,C, ...] , [1,2,2, ...]
