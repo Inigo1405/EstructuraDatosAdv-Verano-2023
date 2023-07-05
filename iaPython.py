@@ -1,7 +1,7 @@
 # 04/07/2023
 # Iñigo Quintana Delgadillo
 
-#! Estudiar para IA
+#! Estudiar para IAs con python
 #pep8
 #numpy
 #pandas
@@ -14,14 +14,14 @@
 #Datos kaggle
 
 
-#*Terminos base:
+#*Términos base:
 # Agent: Entity that percives its environment and acts upon that enviroment
 # State: A configuration of the agent and its enviroment. (Variaciones)
 # Initial State: The state in which the agent begins
 # Actions: Choices that can be made in a state.
 # Transition model: A description of what state results from performing any applicable 
 #                   action in any state.
-# Statepace: The set of all states reachable from the initial state by any sequence of actions.
+# State space: The set of all states reachable from the initial state by any sequence of actions.
 
 
 
