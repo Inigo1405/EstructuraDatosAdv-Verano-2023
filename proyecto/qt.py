@@ -14,9 +14,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1070, 623)
-        MainWindow.setStyleSheet("color: #F9F4F4;\n"
-"background: #13131A;")
+        MainWindow.resize(1091, 681)
+        MainWindow.setStyleSheet("color: #F9F4F4;\n""background: #13131A;")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -28,6 +27,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setSpacing(15)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.display = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.display.setStyleSheet("QPushButton:hover{\n""    background-color: white;\n""    color: #13131A\n""}\n""")
         self.display.setObjectName("display")
         self.horizontalLayout.addWidget(self.display)
         self.recorridoBFS = QtWidgets.QPushButton(self.horizontalLayoutWidget)
@@ -35,16 +35,35 @@ class Ui_MainWindow(object):
         font.setBold(False)
         font.setWeight(50)
         self.recorridoBFS.setFont(font)
+        self.recorridoBFS.setStyleSheet("QPushButton:hover{\n"
+"    background-color: white;\n"
+"    color: #13131A\n"
+"}\n"
+"")
         self.recorridoBFS.setObjectName("recorridoBFS")
         self.horizontalLayout.addWidget(self.recorridoBFS)
         self.recorridoDFS = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.recorridoDFS.setStyleSheet("QPushButton:hover{\n"
+"    background-color: white;\n"
+"    color: #13131A\n"
+"}\n"
+"")
         self.recorridoDFS.setObjectName("recorridoDFS")
         self.horizontalLayout.addWidget(self.recorridoDFS)
         self.mostrarMatriz = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.mostrarMatriz.setStyleSheet("")
+        self.mostrarMatriz.setStyleSheet("QPushButton:hover{\n"
+"    background-color: white;\n"
+"    color: #13131A\n"
+"}\n"
+"")
         self.mostrarMatriz.setObjectName("mostrarMatriz")
         self.horizontalLayout.addWidget(self.mostrarMatriz)
         self.dijkstra = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.dijkstra.setStyleSheet("QPushButton:hover{\n"
+"    background-color: white;\n"
+"    color: #13131A\n"
+"}\n"
+"")
         self.dijkstra.setObjectName("dijkstra")
         self.horizontalLayout.addWidget(self.dijkstra)
         self.title = QtWidgets.QLabel(self.centralwidget)
@@ -57,37 +76,29 @@ class Ui_MainWindow(object):
         font.setItalic(False)
         font.setUnderline(False)
         font.setWeight(75)
-        
         self.title.setFont(font)
         self.title.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.title.setAlignment(QtCore.Qt.AlignCenter)
         self.title.setIndent(0)
         self.title.setObjectName("title")
-        
-        self.widget = QtWidgets.QWidget(self.centralwidget)
-        self.widget.setGeometry(QtCore.QRect(80, 190, 931, 351))
-        self.widget.setStyleSheet("background: #F0EBEB;\n"
+        self.canvas = QtWidgets.QWidget(self.centralwidget)
+        self.canvas.setGeometry(QtCore.QRect(80, 190, 931, 421))
+        self.canvas.setStyleSheet("background: #F0EBEB;\n"
 "border-radius: 30px;")
-        self.widget.setObjectName("widget")
-        
-        self.imgGrafo = QtWidgets.QLabel(self.widget)
-        self.imgGrafo.setGeometry(QtCore.QRect(20, -10, 681, 511))
-        self.imgGrafo.setText("")
-        self.imgGrafo.setPixmap(QtGui.QPixmap("/grafosback.png"))
-        self.imgGrafo.setObjectName("imgGrafo")
-        
+        self.canvas.setObjectName("canvas")
+        self.label = QtWidgets.QLabel(self.canvas)
+        self.label.setGeometry(QtCore.QRect(30, -50, 651, 471))
+        self.label.setObjectName("label")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1070, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1091, 21))
         self.menubar.setObjectName("menubar")
         self.menuMen = QtWidgets.QMenu(self.menubar)
         self.menuMen.setObjectName("menuMen")
-        
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        
         self.menuMen.addSeparator()
         self.menubar.addAction(self.menuMen.menuAction())
 
@@ -103,7 +114,10 @@ class Ui_MainWindow(object):
         self.mostrarMatriz.setText(_translate("MainWindow", "Mostrar matriz"))
         self.dijkstra.setText(_translate("MainWindow", "Dijkstra"))
         self.title.setText(_translate("MainWindow", "Grafos"))
+        self.label.setText(_translate("MainWindow", "<html><head/><body><p><img src=\":/cct/grafosback.png\"/></p></body></html>"))
         self.menuMen.setTitle(_translate("MainWindow", "Menú"))
+
+#import fondo_rc
 
 
 if __name__ == "__main__":
