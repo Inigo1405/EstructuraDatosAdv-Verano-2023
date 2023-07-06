@@ -26,10 +26,12 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setSpacing(15)
         self.horizontalLayout.setObjectName("horizontalLayout")
+        
         self.display = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.display.setStyleSheet("QPushButton:hover{\n""    background-color: white;\n""    color: #13131A\n""}\n""")
         self.display.setObjectName("display")
         self.horizontalLayout.addWidget(self.display)
+        
         self.recorridoBFS = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         font = QtGui.QFont()
         font.setBold(False)

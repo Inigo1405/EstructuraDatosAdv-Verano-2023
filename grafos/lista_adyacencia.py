@@ -1,9 +1,9 @@
 #Buen código es en inglés
 #22/06/2023
+
 import time
 from cola import Queue
 import numpy as np
-#from ..estructurasLineales.cola import Queue
 
 
 class Node:
