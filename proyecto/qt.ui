@@ -14,8 +14,10 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: #F9F4F4;
-background: #13131A;</string>
+   <string notr="true">QWidget{
+	color: #F9F4F4;
+	background: #13131A;
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="horizontalLayoutWidget">
@@ -40,10 +42,18 @@ background: #13131A;</string>
      <item>
       <widget class="QPushButton" name="display">
        <property name="styleSheet">
-        <string notr="true">QPushButton:hover{
+        <string notr="true">QPushButton{
+	
+	border-color: red;
+	border-left: 10px solid rgb(255, 255, 255);
+}
+
+
+QPushButton:hover{
 	background-color: white;
 	color: #13131A
 }
+
 </string>
        </property>
        <property name="text">
