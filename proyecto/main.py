@@ -133,11 +133,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                 self.hitBox.append((self.x+(collisionShape), self.y+(collisionShape), self.x-(collisionShape), self.y-(collisionShape)))
         
 
-        
-            # print(self.circles)
-            # print(self.hitBox[0])
-
-            
             for i in range(len(self.circles)):
                 x, y = self.circles[i]
                 painter.drawEllipse(x, y, diameter, diameter)
@@ -150,8 +145,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
             painter.end()
     
 
-    def del_vertex(self):
-        if not self.addVertex:
+
+
+    def del_vertex(self, event):
+        print("Hola")
+        if self.vertexAdd == False:
             x = self.search_vertex()
             self.hitBox.pop(x)
             self.circles.pop(x)
