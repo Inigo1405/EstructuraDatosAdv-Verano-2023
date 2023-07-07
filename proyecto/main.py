@@ -13,9 +13,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.vertexAdd = False
 
 
-        self.display.clicked.connect(self.button_clicked)
+        #self.display.clicked.connect(self.button_clicked)
         self.cleanAll.clicked.connect(self.clear_graph)
-        #self.addVertex.clicked.connect(self.vertexAdd = True)
+        self.addVertex.clicked.connect(self.addButton_vertex)
+        self.delVertex.clicked.connect(self.delButton_vertex)
 
         self.statusbar.showMessage("Ready!")
 
@@ -39,9 +40,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.update()
 
 
+    def delButton_vertex(self):
+        self.vertexAdd = False
 
-    def button_clicked(self):
-        pass
+
+    def addButton_vertex(self):
+        self.vertexAdd = True
         
 
 
@@ -62,12 +66,29 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
             self.show_pos(clicked_pos)
             #print(self.canvas.rect())
             self.click = True
+            self.search_vertex()
+
             self.update()
             
         elif event.button() == Qt.RightButton:
             print("Right button pressed")
-            # clicked_pos = event.pos()
-            # self.show_pos(clicked_pos)
+            
+
+
+    def search_vertex(self):
+        if self.hitBox != []:
+            for i in range(len(self.hitBox)):
+                x1, y1, x2, y2 = self.hitBox[i]
+
+                if self.x < x1 and self.x > x2 and self.y <= y1 and self.y >= y2:
+                    try:
+                        print(f"Nodo: {self.listABC[i]}") 
+                        return i
+                    
+                    except:
+                        print(f"Nodo: {self.listabc[i-len(self.listABC)]}")
+                        return i
+
 
 
     def hitBox_area(self):
@@ -80,7 +101,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                 x1, y1, x2, y2 = hitBox
 
                 if self.x < x1 and self.x > x2 and self.y <= y1 and self.y >= y2:
-                    print("No agregar!") 
+                    #print("No agregar!") 
                     return False
                 
                 else:
@@ -91,7 +112,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         
         
     def paintEvent(self, event):
-        if self.click:
+        if self.click and self.vertexAdd:
             self.click = False
             #print("Painted")
             diameter = 40
@@ -128,6 +149,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                 
             painter.end()
     
+
+    def del_vertex(self):
+        if not self.addVertex:
+            x = self.search_vertex()
+            self.hitBox.pop(x)
+            self.circles.pop(x)
 
         
 if __name__ == "__main__":

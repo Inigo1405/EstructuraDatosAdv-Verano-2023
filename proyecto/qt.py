@@ -15,7 +15,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1656, 829)
-        MainWindow.setStyleSheet("color: #F0EBEB")
+        MainWindow.setStyleSheet("color: #F0EBEB; ")
         self.generalWigdet = QtWidgets.QWidget(MainWindow)
         #self.generalWigdet.setStyleSheet("QWidget{\n""    color: rgb(255, 255, 255);\n""    background-color: rgb(19, 19, 26);\n""}")
         self.generalWigdet.setObjectName("generalWigdet")
