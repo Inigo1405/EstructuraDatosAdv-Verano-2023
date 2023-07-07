@@ -200,24 +200,10 @@ QPushButton:hover{
     </property>
     <property name="styleSheet">
      <string notr="true">background: #F0EBEB;
-border-radius: 30px;</string>
+background-image: url(:/cct/grafosback.png);
+border-radius: 30px;
+background-repeat: no-repeat;</string>
     </property>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>0</y>
-       <width>621</width>
-       <height>511</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>grafosback.png</pixmap>
-     </property>
-    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -239,6 +225,8 @@ border-radius: 30px;</string>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="img.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -58,7 +58,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.circles.append((self.x-radius, self.y-radius))
         
         
-        painter.drawText(self.x-radius, self.y-radius, "Sexo")
+       
         text = "Hello"
         #font = QFont("Arial", 12)
         #text_rect = (10, 10, -10, -10)
@@ -71,7 +71,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             x, y = circle
             painter.drawEllipse(x, y, diameter, diameter)
             
-            painter.drawText(x, y, "Sexo")
+            painter.drawText(x, y, text)
         
         painter.end()
     

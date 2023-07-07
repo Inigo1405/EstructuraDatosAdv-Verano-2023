@@ -14,8 +14,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1091, 681)
-        MainWindow.setStyleSheet("\n"
+        MainWindow.resize(1063, 697)
+        MainWindow.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgb(19, 19, 26);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -123,16 +123,13 @@ class Ui_MainWindow(object):
         self.canvas = QtWidgets.QWidget(self.centralwidget)
         self.canvas.setGeometry(QtCore.QRect(80, 190, 931, 421))
         self.canvas.setStyleSheet("background: #F0EBEB;\n"
-"border-radius: 30px;")
+"background-image: url(:/cct/grafosback.png);\n"
+"border-radius: 30px;\n"
+"background-repeat: no-repeat;")
         self.canvas.setObjectName("canvas")
-        self.label = QtWidgets.QLabel(self.canvas)
-        self.label.setGeometry(QtCore.QRect(30, 0, 621, 511))
-        self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("grafosback.png"))
-        self.label.setObjectName("label")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1091, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1063, 22))
         self.menubar.setObjectName("menubar")
         self.menuMen = QtWidgets.QMenu(self.menubar)
         self.menuMen.setObjectName("menuMen")
@@ -156,6 +153,7 @@ class Ui_MainWindow(object):
         self.dijkstra.setText(_translate("MainWindow", "Dijkstra"))
         self.title.setText(_translate("MainWindow", "Grafos"))
         self.menuMen.setTitle(_translate("MainWindow", "Menú"))
+import img_rc
 
 
 if __name__ == "__main__":

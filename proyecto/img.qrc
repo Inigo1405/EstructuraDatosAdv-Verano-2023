@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="cct">
+    <file>grafosback.png</file>
+  </qresource>
+</RCC>
