@@ -15,9 +15,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1656, 829)
-        MainWindow.setStyleSheet("color: #F0EBEB; ")
+        MainWindow.setStyleSheet("color: #F0EBEB")
         self.generalWigdet = QtWidgets.QWidget(MainWindow)
-        #self.generalWigdet.setStyleSheet("QWidget{\n""    color: rgb(255, 255, 255);\n""    background-color: rgb(19, 19, 26);\n""}")
+        # self.generalWigdet.setStyleSheet("QWidget{\n""    color: rgb(255, 255, 255);\n""    background-color: rgb(19, 19, 26);\n""}")
         self.generalWigdet.setObjectName("generalWigdet")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.generalWigdet)
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(210, 100, 1101, 81))
@@ -126,7 +126,7 @@ class Ui_MainWindow(object):
         self.title.setIndent(0)
         self.title.setObjectName("title")
         self.canvas = QtWidgets.QWidget(self.generalWigdet)
-        self.canvas.setGeometry(QtCore.QRect(70, 190, 1351, 571))
+        self.canvas.setGeometry(QtCore.QRect(70, 190, 631, 581))
         self.canvas.setStyleSheet("background: #F0EBEB;\n"
 "background-image: url(:/cct/grafosback.png);\n"
 "border-radius: 30px;\n"
@@ -232,9 +232,13 @@ class Ui_MainWindow(object):
         self.subtitle_vertex.setFont(font)
         self.subtitle_vertex.setAlignment(QtCore.Qt.AlignCenter)
         self.subtitle_vertex.setObjectName("subtitle_vertex")
+        self.fondo = QtWidgets.QWidget(self.generalWigdet)
+        self.fondo.setGeometry(QtCore.QRect(720, 200, 321, 561))
+        self.fondo.setStyleSheet("background-color: rgb(170, 255, 255);")
+        self.fondo.setObjectName("fondo")
         MainWindow.setCentralWidget(self.generalWigdet)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1656, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1656, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)

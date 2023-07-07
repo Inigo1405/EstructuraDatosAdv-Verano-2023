@@ -1,4 +1,3 @@
-import sys
 from qt import *
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtCore import Qt, QRect, QPoint
@@ -29,6 +28,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
 
         self.circles = []
         self.hitBox = []
+        
+        #Para pintar en el widget canvas
+        # self.fondo.mousePressEvent = self._mousePressEvent
+        # self.fondo.paintEvent = self.paintEvent
 
 
 
@@ -59,7 +62,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.update()
 
 
-
+    #_mousePressEvent
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             clicked_pos = event.pos()
@@ -67,6 +70,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
             #print(self.canvas.rect())
             self.click = True
             self.search_vertex()
+
+            if self.vertexAdd == False:
+                self.del_vertex()
 
             self.update()
             
@@ -100,7 +106,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
             for hitBox in self.hitBox:
                 x1, y1, x2, y2 = hitBox
 
-                if self.x < x1 and self.x > x2 and self.y <= y1 and self.y >= y2:
+                if self.x <= x1 and self.x >= x2 and self.y <= y1 and self.y >= y2:
                     #print("No agregar!") 
                     return False
                 
@@ -111,8 +117,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                 return True
         
         
+        
     def paintEvent(self, event):
-        if self.click and self.vertexAdd:
+        if self.click:
             self.click = False
             #print("Painted")
             diameter = 40
@@ -127,7 +134,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
             painter.setBrush(QtGui.QBrush(QtCore.Qt.blue, QtCore.Qt.SolidPattern))
             collisionShape = radius*3
             
-            if self.hitBox_area():
+            if self.hitBox_area() and self.vertexAdd == True:
                 painter.drawEllipse(self.x-radius, self.y-radius, diameter, diameter)
                 self.circles.append((self.x-radius, self.y-radius))
                 self.hitBox.append((self.x+(collisionShape), self.y+(collisionShape), self.x-(collisionShape), self.y-(collisionShape)))
@@ -138,22 +145,27 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                 painter.drawEllipse(x, y, diameter, diameter)
 
                 try:
-                    painter.drawText(x+radius-3, y+radius+4, self.listABC[i])
+                    painter.drawText(x+radius-5, y+radius+5, self.listABC[i])
                 except:
-                    painter.drawText(x+radius-3, y+radius+4, self.listabc[i-len(self.listABC)])
+                    painter.drawText(x+radius-5, y+radius+5, self.listabc[i-len(self.listABC)])
                 
             painter.end()
     
 
 
-
-    def del_vertex(self, event):
-        print("Hola")
-        if self.vertexAdd == False:
+    def del_vertex(self):
+        if self.circles != []:
             x = self.search_vertex()
-            self.hitBox.pop(x)
-            self.circles.pop(x)
+            print(x)
+            if x != None:
+                self.hitBox.pop(x)
+                self.circles.pop(x)
+                
+            print(self.circles)
+            print(self.circles)
+            self.update()
 
+        
         
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
