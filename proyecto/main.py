@@ -10,6 +10,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.setWindowTitle("Proyecto final Grafos | Iñigo Q D")
         
         self.vertexAdd = False
+        self.edgeAdd = False
 
 
         #self.display.clicked.connect(self.button_clicked)
@@ -30,8 +31,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.hitBox = []
         
         #Para pintar en el widget canvas
-        # self.fondo.mousePressEvent = self._mousePressEvent
-        # self.fondo.paintEvent = self.paintEvent
+        self.canvas.mousePressEvent = self._mousePressEvent
+        self.canvas.paintEvent = self.paintEvent
 
 
 
@@ -62,22 +63,68 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.update()
 
 
-    #_mousePressEvent
-    def mousePressEvent(self, event):
+
+    def _mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
+            print("left button pressed")
             clicked_pos = event.pos()
-            self.show_pos(clicked_pos)
-            #print(self.canvas.rect())
+            print(f"{clicked_pos}")
+            self.x = clicked_pos.x()
+            self.y = clicked_pos.y()
             self.click = True
             self.search_vertex()
-
-            if self.vertexAdd == False:
-                self.del_vertex()
-
-            self.update()
+            self.del_vertex()
+            self.statusbar.showMessage(f'{self.x} , {self.y}')
+            self.canvas.update()
             
         elif event.button() == Qt.RightButton:
-            print("Right button pressed")
+            print("\nright button pressed")
+            
+
+
+    def paintEvent(self, event):
+            
+        diameter = 50
+        radius = int(diameter/2)
+        
+        painter = QPainter(self.canvas)
+        
+        painter.setPen(QPen(QtCore.Qt.black, 3, QtCore.Qt.SolidLine))
+        painter.setBrush(QBrush(QtCore.Qt.blue, QtCore.Qt.SolidPattern))
+        #
+        
+        
+        collisionShape = radius*3
+        print(self.canvas.rect())
+        
+        if self.click and self.hitBox_area() and self.vertexAdd:
+            painter.drawEllipse(self.x-radius, self.y-radius, diameter, diameter)
+            
+            
+            self.circles.append((self.x-radius, self.y-radius))
+            self.hitBox.append((self.x+(collisionShape), self.y+(collisionShape), self.x-(collisionShape), self.y-(collisionShape)))
+
+
+        if self.edgeAdd:
+            pass
+
+
+
+        self.click = False
+
+        for i in range(len(self.circles)):
+            x, y = self.circles[i]
+            
+            painter.drawLine(x+radius-5,y+radius+5, 500, 500)
+            
+            painter.drawEllipse(x, y, diameter, diameter)
+            try:
+                painter.drawText(x+radius-5, y+radius+5, self.listABC[i])
+            except:
+                painter.drawText(x+radius-5, y+radius+5, self.listabc[i-len(self.listABC)])
+        
+        
+        painter.end()
             
 
 
@@ -118,43 +165,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         
         
         
-    def paintEvent(self, event):
-        if self.click:
-            self.click = False
-            #print("Painted")
-            diameter = 40
-            radius = int(diameter/2)
-            
-            painter = QtGui.QPainter(self)
-            # Con esto pinta y quitando el background color
-            #painter.fillRect(self.rect(), QColor(19, 19, 26))
-
-
-            painter.setPen(QtGui.QPen(QtCore.Qt.white, 1, QtCore.Qt.SolidLine))
-            painter.setBrush(QtGui.QBrush(QtCore.Qt.blue, QtCore.Qt.SolidPattern))
-            collisionShape = radius*3
-            
-            if self.hitBox_area() and self.vertexAdd == True:
-                painter.drawEllipse(self.x-radius, self.y-radius, diameter, diameter)
-                self.circles.append((self.x-radius, self.y-radius))
-                self.hitBox.append((self.x+(collisionShape), self.y+(collisionShape), self.x-(collisionShape), self.y-(collisionShape)))
-        
-
-            for i in range(len(self.circles)):
-                x, y = self.circles[i]
-                painter.drawEllipse(x, y, diameter, diameter)
-
-                try:
-                    painter.drawText(x+radius-5, y+radius+5, self.listABC[i])
-                except:
-                    painter.drawText(x+radius-5, y+radius+5, self.listabc[i-len(self.listABC)])
-                
-            painter.end()
-    
-
-
     def del_vertex(self):
-        if self.circles != []:
+        if self.circles != [] and self.vertexAdd == False:
             x = self.search_vertex()
             print(x)
             if x != None:
