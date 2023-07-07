@@ -1,24 +1,49 @@
+import sys
 from qt import *
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter, QPen, QBrush
+from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtCore import Qt, QRect, QPoint
+from PyQt5.QtGui import QPainter, QPen, QBrush, QColor
 
-class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
     def __init__(self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Proyecto final Grafos | Iñigo Q D")
         
-        
+        self.vertexAdd = False
+
+
         self.display.clicked.connect(self.button_clicked)
+        self.cleanAll.clicked.connect(self.clear_graph)
+        #self.addVertex.clicked.connect(self.vertexAdd = True)
+
         self.statusbar.showMessage("Ready!")
+
+        self.listABC = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+        self.listabc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+        
         self.x = 0
         self.y = 0
+        self.click = False
+
         self.circles = []
-        #self.canvas
-        
-        
+        self.hitBox = []
+
+
+
+    def clear_graph(self):
+        self.circles = []
+        self.hitBox = []
+        self.statusbar.showMessage("Graph clean!")
+        print(self.circles)
+        self.update()
+
+
+
     def button_clicked(self):
-        print("Hola Mundo")
+        pass
+        
+
 
 
     def show_pos(self, click):
@@ -35,6 +60,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if event.button() == Qt.LeftButton:
             clicked_pos = event.pos()
             self.show_pos(clicked_pos)
+            #print(self.canvas.rect())
+            self.click = True
             self.update()
             
         elif event.button() == Qt.RightButton:
@@ -43,38 +70,65 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             # self.show_pos(clicked_pos)
 
 
+    def hitBox_area(self):
+        if self.hitBox == []:
+            print("Agregado")
+            return True
 
-    def paintEvent(self, event):
-        #print("Painted")
-        diameter = 50
-        radius = int(diameter/2)
-        
-        painter = QtGui.QPainter(self)
-        painter.setPen(QtGui.QPen(QtCore.Qt.white, 1, QtCore.Qt.SolidLine))
-        painter.setBrush(QtGui.QBrush(QtCore.Qt.blue, QtCore.Qt.SolidPattern))
-        
+        else:
+            for hitBox in self.hitBox:
+                x1, y1, x2, y2 = hitBox
 
-        painter.drawEllipse(self.x-radius, self.y-radius, diameter, diameter)
-        self.circles.append((self.x-radius, self.y-radius))
-        
-        
-       
-        text = "Hello"
-        #font = QFont("Arial", 12)
-        #text_rect = (10, 10, -10, -10)
-        # painter.setFont(font)
-        #painter.setPen(Qt.black)
-        
-        
-        
-        for circle in self.circles:
-            x, y = circle
-            painter.drawEllipse(x, y, diameter, diameter)
+                if self.x < x1 and self.x > x2 and self.y <= y1 and self.y >= y2:
+                    print("No agregar!") 
+                    return False
+                
+                else:
+                    seguro = True
             
-            painter.drawText(x, y, text)
+            if seguro:
+                return True
         
-        painter.end()
+        
+    def paintEvent(self, event):
+        if self.click:
+            self.click = False
+            #print("Painted")
+            diameter = 40
+            radius = int(diameter/2)
+            
+            painter = QtGui.QPainter(self)
+            # Con esto pinta y quitando el background color
+            #painter.fillRect(self.rect(), QColor(19, 19, 26))
+
+
+            painter.setPen(QtGui.QPen(QtCore.Qt.white, 1, QtCore.Qt.SolidLine))
+            painter.setBrush(QtGui.QBrush(QtCore.Qt.blue, QtCore.Qt.SolidPattern))
+            collisionShape = radius*3
+            
+            if self.hitBox_area():
+                painter.drawEllipse(self.x-radius, self.y-radius, diameter, diameter)
+                self.circles.append((self.x-radius, self.y-radius))
+                self.hitBox.append((self.x+(collisionShape), self.y+(collisionShape), self.x-(collisionShape), self.y-(collisionShape)))
+        
+
+        
+            # print(self.circles)
+            # print(self.hitBox[0])
+
+            
+            for i in range(len(self.circles)):
+                x, y = self.circles[i]
+                painter.drawEllipse(x, y, diameter, diameter)
+
+                try:
+                    painter.drawText(x+radius-3, y+radius+4, self.listABC[i])
+                except:
+                    painter.drawText(x+radius-3, y+radius+4, self.listabc[i-len(self.listABC)])
+                
+            painter.end()
     
+
         
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])

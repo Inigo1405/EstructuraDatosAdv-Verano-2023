@@ -14,13 +14,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1063, 697)
-        MainWindow.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(19, 19, 26);")
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(110, 90, 861, 81))
+        MainWindow.resize(1656, 829)
+        MainWindow.setStyleSheet("color: #F0EBEB")
+        self.generalWigdet = QtWidgets.QWidget(MainWindow)
+        #self.generalWigdet.setStyleSheet("QWidget{\n""    color: rgb(255, 255, 255);\n""    background-color: rgb(19, 19, 26);\n""}")
+        self.generalWigdet.setObjectName("generalWigdet")
+        self.horizontalLayoutWidget = QtWidgets.QWidget(self.generalWigdet)
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(210, 100, 1101, 81))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
@@ -43,12 +43,12 @@ class Ui_MainWindow(object):
 "")
         self.display.setObjectName("display")
         self.horizontalLayout.addWidget(self.display)
-        self.recorridoBFS = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.BFS = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
-        self.recorridoBFS.setFont(font)
-        self.recorridoBFS.setStyleSheet("QPushButton{\n"
+        self.BFS.setFont(font)
+        self.BFS.setStyleSheet("QPushButton{\n"
 "    color: rgb(255, 255, 255);\n"
 "    border-color: red;\n"
 "    border-left: 10px solid rgb(255, 255, 255);\n"
@@ -60,10 +60,10 @@ class Ui_MainWindow(object):
 "    color: #13131A\n"
 "}\n"
 "")
-        self.recorridoBFS.setObjectName("recorridoBFS")
-        self.horizontalLayout.addWidget(self.recorridoBFS)
-        self.recorridoDFS = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.recorridoDFS.setStyleSheet("QPushButton{\n"
+        self.BFS.setObjectName("BFS")
+        self.horizontalLayout.addWidget(self.BFS)
+        self.DFS = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.DFS.setStyleSheet("QPushButton{\n"
 "    color: rgb(255, 255, 255);\n"
 "    border-color: red;\n"
 "    border-left: 10px solid rgb(255, 255, 255);\n"
@@ -74,10 +74,10 @@ class Ui_MainWindow(object):
 "    color: #13131A\n"
 "}\n"
 "")
-        self.recorridoDFS.setObjectName("recorridoDFS")
-        self.horizontalLayout.addWidget(self.recorridoDFS)
-        self.mostrarMatriz = QtWidgets.QPushButton(self.horizontalLayoutWidget)
-        self.mostrarMatriz.setStyleSheet("QPushButton{\n"
+        self.DFS.setObjectName("DFS")
+        self.horizontalLayout.addWidget(self.DFS)
+        self.showMatrix = QtWidgets.QPushButton(self.horizontalLayoutWidget)
+        self.showMatrix.setStyleSheet("QPushButton{\n"
 "    color: rgb(255, 255, 255);\n"
 "    border-color: red;\n"
 "    border-left: 10px solid rgb(255, 255, 255);\n"
@@ -88,8 +88,8 @@ class Ui_MainWindow(object):
 "    color: #13131A\n"
 "}\n"
 "")
-        self.mostrarMatriz.setObjectName("mostrarMatriz")
-        self.horizontalLayout.addWidget(self.mostrarMatriz)
+        self.showMatrix.setObjectName("showMatrix")
+        self.horizontalLayout.addWidget(self.showMatrix)
         self.dijkstra = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         self.dijkstra.setStyleSheet("QPushButton{\n"
 "    color: rgb(255, 255, 255);\n"
@@ -104,8 +104,13 @@ class Ui_MainWindow(object):
 "")
         self.dijkstra.setObjectName("dijkstra")
         self.horizontalLayout.addWidget(self.dijkstra)
-        self.title = QtWidgets.QLabel(self.centralwidget)
-        self.title.setGeometry(QtCore.QRect(470, 40, 151, 41))
+        self.horizontalLayout.setStretch(0, 50)
+        self.horizontalLayout.setStretch(1, 50)
+        self.horizontalLayout.setStretch(2, 50)
+        self.horizontalLayout.setStretch(3, 50)
+        self.horizontalLayout.setStretch(4, 50)
+        self.title = QtWidgets.QLabel(self.generalWigdet)
+        self.title.setGeometry(QtCore.QRect(690, 50, 151, 41))
         self.title.setMinimumSize(QtCore.QSize(0, 13))
         font = QtGui.QFont()
         font.setFamily("Tw Cen MT")
@@ -120,25 +125,121 @@ class Ui_MainWindow(object):
         self.title.setAlignment(QtCore.Qt.AlignCenter)
         self.title.setIndent(0)
         self.title.setObjectName("title")
-        self.canvas = QtWidgets.QWidget(self.centralwidget)
-        self.canvas.setGeometry(QtCore.QRect(80, 190, 931, 421))
+        self.canvas = QtWidgets.QWidget(self.generalWigdet)
+        self.canvas.setGeometry(QtCore.QRect(70, 190, 1351, 571))
         self.canvas.setStyleSheet("background: #F0EBEB;\n"
 "background-image: url(:/cct/grafosback.png);\n"
 "border-radius: 30px;\n"
 "background-repeat: no-repeat;")
         self.canvas.setObjectName("canvas")
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.cleanAll = QtWidgets.QPushButton(self.generalWigdet)
+        self.cleanAll.setGeometry(QtCore.QRect(1500, 600, 75, 23))
+        self.cleanAll.setStyleSheet("QPushButton{\n"
+"    color: rgb(255, 255, 255);\n"
+"    border-color: red;\n"
+"    border-left: 10px solid rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: white;\n"
+"    color: #13131A\n"
+"}\n"
+"")
+        self.cleanAll.setObjectName("cleanAll")
+        self.verticalLayoutWidget = QtWidgets.QWidget(self.generalWigdet)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(1450, 270, 160, 80))
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.addVertex = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.addVertex.setStyleSheet("QPushButton{\n"
+"    color: rgb(255, 255, 255);\n"
+"    border-color: red;\n"
+"    border-left: 10px solid rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: white;\n"
+"    color: #13131A\n"
+"}\n"
+"\n"
+"")
+        self.addVertex.setObjectName("addVertex")
+        self.verticalLayout_2.addWidget(self.addVertex)
+        self.delVertex = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.delVertex.setStyleSheet("QPushButton{\n"
+"    color: rgb(255, 255, 255);\n"
+"    border-color: red;\n"
+"    border-left: 10px solid rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: white;\n"
+"    color: #13131A\n"
+"}\n"
+"")
+        self.delVertex.setObjectName("delVertex")
+        self.verticalLayout_2.addWidget(self.delVertex)
+        self.verticalLayoutWidget_2 = QtWidgets.QWidget(self.generalWigdet)
+        self.verticalLayoutWidget_2.setGeometry(QtCore.QRect(1450, 490, 160, 80))
+        self.verticalLayoutWidget_2.setObjectName("verticalLayoutWidget_2")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.verticalLayoutWidget_2)
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.addEdge = QtWidgets.QPushButton(self.verticalLayoutWidget_2)
+        self.addEdge.setStyleSheet("QPushButton{\n"
+"    color: rgb(255, 255, 255);\n"
+"    border-color: red;\n"
+"    border-left: 10px solid rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: white;\n"
+"    color: #13131A\n"
+"}\n"
+"")
+        self.addEdge.setObjectName("addEdge")
+        self.verticalLayout_3.addWidget(self.addEdge)
+        self.delEdge = QtWidgets.QPushButton(self.verticalLayoutWidget_2)
+        self.delEdge.setStyleSheet("QPushButton{\n"
+"    color: rgb(255, 255, 255);\n"
+"    border-color: red;\n"
+"    border-left: 10px solid rgb(255, 255, 255);\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    background-color: white;\n"
+"    color: #13131A\n"
+"}\n"
+"")
+        self.delEdge.setObjectName("delEdge")
+        self.verticalLayout_3.addWidget(self.delEdge)
+        self.subtitle_edge = QtWidgets.QLabel(self.generalWigdet)
+        self.subtitle_edge.setGeometry(QtCore.QRect(1470, 450, 131, 31))
+        font = QtGui.QFont()
+        font.setFamily("Nirmala UI")
+        font.setPointSize(13)
+        self.subtitle_edge.setFont(font)
+        self.subtitle_edge.setAlignment(QtCore.Qt.AlignCenter)
+        self.subtitle_edge.setObjectName("subtitle_edge")
+        self.subtitle_vertex = QtWidgets.QLabel(self.generalWigdet)
+        self.subtitle_vertex.setGeometry(QtCore.QRect(1460, 230, 131, 31))
+        font = QtGui.QFont()
+        font.setFamily("Nirmala UI")
+        font.setPointSize(13)
+        self.subtitle_vertex.setFont(font)
+        self.subtitle_vertex.setAlignment(QtCore.Qt.AlignCenter)
+        self.subtitle_vertex.setObjectName("subtitle_vertex")
+        MainWindow.setCentralWidget(self.generalWigdet)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1063, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1656, 21))
         self.menubar.setObjectName("menubar")
-        self.menuMen = QtWidgets.QMenu(self.menubar)
-        self.menuMen.setObjectName("menuMen")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        self.menuMen.addSeparator()
-        self.menubar.addAction(self.menuMen.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -147,12 +248,18 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.display.setText(_translate("MainWindow", "Display"))
-        self.recorridoBFS.setText(_translate("MainWindow", "Recorrido BFS"))
-        self.recorridoDFS.setText(_translate("MainWindow", "Recorrido DFS"))
-        self.mostrarMatriz.setText(_translate("MainWindow", "Mostrar matriz"))
+        self.BFS.setText(_translate("MainWindow", "Recorrido BFS"))
+        self.DFS.setText(_translate("MainWindow", "Recorrido DFS"))
+        self.showMatrix.setText(_translate("MainWindow", "Mostrar matriz"))
         self.dijkstra.setText(_translate("MainWindow", "Dijkstra"))
         self.title.setText(_translate("MainWindow", "Grafos"))
-        self.menuMen.setTitle(_translate("MainWindow", "Menú"))
+        self.cleanAll.setText(_translate("MainWindow", "Borrar Todo"))
+        self.addVertex.setText(_translate("MainWindow", "Agrega vertice"))
+        self.delVertex.setText(_translate("MainWindow", "Elimina vertice"))
+        self.addEdge.setText(_translate("MainWindow", "Agrega conexión"))
+        self.delEdge.setText(_translate("MainWindow", "Elimina conexión"))
+        self.subtitle_edge.setText(_translate("MainWindow", "Conexiones"))
+        self.subtitle_vertex.setText(_translate("MainWindow", "Vertices"))
 import img_rc
 
 

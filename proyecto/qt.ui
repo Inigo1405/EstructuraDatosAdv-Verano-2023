@@ -6,35 +6,49 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1063</width>
-    <height>697</height>
+    <width>1656</width>
+    <height>829</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(19, 19, 26);</string>
+   <string notr="true">color: #F0EBEB</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="generalWigdet">
+   <property name="styleSheet">
+    <string notr="true">QWidget{
+	color: rgb(255, 255, 255);
+	background-color: rgb(19, 19, 26);
+}</string>
+   </property>
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>90</y>
-      <width>861</width>
+      <x>210</x>
+      <y>100</y>
+      <width>1101</width>
       <height>81</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="50,50,50,50,50">
      <property name="spacing">
       <number>15</number>
      </property>
      <property name="sizeConstraint">
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
      <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>
@@ -60,7 +74,7 @@ QPushButton:hover{
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="recorridoBFS">
+      <widget class="QPushButton" name="BFS">
        <property name="font">
         <font>
          <weight>50</weight>
@@ -87,7 +101,7 @@ QPushButton:hover{
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="recorridoDFS">
+      <widget class="QPushButton" name="DFS">
        <property name="styleSheet">
         <string notr="true">QPushButton{
 	color: rgb(255, 255, 255);
@@ -107,7 +121,7 @@ QPushButton:hover{
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="mostrarMatriz">
+      <widget class="QPushButton" name="showMatrix">
        <property name="styleSheet">
         <string notr="true">QPushButton{
 	color: rgb(255, 255, 255);
@@ -151,8 +165,8 @@ QPushButton:hover{
    <widget class="QLabel" name="title">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>40</y>
+      <x>690</x>
+      <y>50</y>
       <width>151</width>
       <height>41</height>
      </rect>
@@ -192,10 +206,10 @@ QPushButton:hover{
    <widget class="QWidget" name="canvas" native="true">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>70</x>
       <y>190</y>
-      <width>931</width>
-      <height>421</height>
+      <width>1351</width>
+      <height>571</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -205,23 +219,192 @@ border-radius: 30px;
 background-repeat: no-repeat;</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="cleanAll">
+    <property name="geometry">
+     <rect>
+      <x>1500</x>
+      <y>600</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{
+	color: rgb(255, 255, 255);
+	border-color: red;
+	border-left: 10px solid rgb(255, 255, 255);
+}
+
+QPushButton:hover{
+	background-color: white;
+	color: #13131A
+}
+</string>
+    </property>
+    <property name="text">
+     <string>Borrar Todo</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>1450</x>
+      <y>270</y>
+      <width>160</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QPushButton" name="addVertex">
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+	color: rgb(255, 255, 255);
+	border-color: red;
+	border-left: 10px solid rgb(255, 255, 255);
+}
+
+
+QPushButton:hover{
+	background-color: white;
+	color: #13131A
+}
+
+</string>
+       </property>
+       <property name="text">
+        <string>Agrega vertice</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="delVertex">
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+	color: rgb(255, 255, 255);
+	border-color: red;
+	border-left: 10px solid rgb(255, 255, 255);
+}
+
+QPushButton:hover{
+	background-color: white;
+	color: #13131A
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Elimina vertice</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>1450</x>
+      <y>490</y>
+      <width>160</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QPushButton" name="addEdge">
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+	color: rgb(255, 255, 255);
+	border-color: red;
+	border-left: 10px solid rgb(255, 255, 255);
+}
+
+QPushButton:hover{
+	background-color: white;
+	color: #13131A
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Agrega conexión</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="delEdge">
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+	color: rgb(255, 255, 255);
+	border-color: red;
+	border-left: 10px solid rgb(255, 255, 255);
+}
+
+QPushButton:hover{
+	background-color: white;
+	color: #13131A
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Elimina conexión</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="subtitle_edge">
+    <property name="geometry">
+     <rect>
+      <x>1470</x>
+      <y>450</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Nirmala UI</family>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Conexiones</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="subtitle_vertex">
+    <property name="geometry">
+     <rect>
+      <x>1460</x>
+      <y>230</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Nirmala UI</family>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Vertices</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1063</width>
-     <height>22</height>
+     <width>1656</width>
+     <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuMen">
-    <property name="title">
-     <string>Menú</string>
-    </property>
-    <addaction name="separator"/>
-   </widget>
-   <addaction name="menuMen"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
