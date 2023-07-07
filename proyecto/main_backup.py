@@ -11,3 +11,8 @@ if __name__ == "__main__":
     window = MainWindow()
     window.show()
     app.exec_()
+    
+    
+    
+#pyuic5 -x file.ui -o file.py
+#pyrcc5 -x file.qrc -o file_rc.py
