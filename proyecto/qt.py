@@ -14,11 +14,21 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1658, 865)
-        MainWindow.setStyleSheet("color: #F0EBEB")
+        MainWindow.resize(1662, 925)
+        MainWindow.setMinimumSize(QtCore.QSize(0, 0))
+        MainWindow.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        MainWindow.setStyleSheet("\n"
+"QMainWindow{\n"
+"    color: #F0EBEB;\n"
+"    background-color: rgb(43, 43, 57);\n"
+"}\n"
+"\n"
+"QStatusBar{\n"
+"    color: #F0EBEB;\n"
+"}")
         self.generalWigdet = QtWidgets.QWidget(MainWindow)
         self.generalWigdet.setStyleSheet("QWidget{\n"
-"    color: rgb(255, 255, 255);\n"
+"    color: #F0EBEB;\n"
 "    background-color: rgb(19, 19, 26);\n"
 "}")
         self.generalWigdet.setObjectName("generalWigdet")
@@ -129,14 +139,14 @@ class Ui_MainWindow(object):
         self.title.setIndent(0)
         self.title.setObjectName("title")
         self.canvas = QtWidgets.QWidget(self.generalWigdet)
-        self.canvas.setGeometry(QtCore.QRect(60, 190, 1351, 611))
+        self.canvas.setGeometry(QtCore.QRect(60, 190, 1351, 651))
         self.canvas.setStyleSheet("background: #F0EBEB;\n"
 "background-image: url(:/cct/grafosback.png);\n"
 "border-radius: 30px;\n"
 "background-repeat: no-repeat;")
         self.canvas.setObjectName("canvas")
         self.cleanAll = QtWidgets.QPushButton(self.generalWigdet)
-        self.cleanAll.setGeometry(QtCore.QRect(1500, 600, 75, 23))
+        self.cleanAll.setGeometry(QtCore.QRect(1470, 600, 131, 21))
         self.cleanAll.setStyleSheet("QPushButton{\n"
 "    color: rgb(255, 255, 255);\n"
 "    border-color: red;\n"
@@ -220,7 +230,7 @@ class Ui_MainWindow(object):
         self.delEdge.setObjectName("delEdge")
         self.verticalLayout_3.addWidget(self.delEdge)
         self.subtitle_edge = QtWidgets.QLabel(self.generalWigdet)
-        self.subtitle_edge.setGeometry(QtCore.QRect(1470, 450, 131, 31))
+        self.subtitle_edge.setGeometry(QtCore.QRect(1440, 430, 171, 51))
         font = QtGui.QFont()
         font.setFamily("Nirmala UI")
         font.setPointSize(13)
@@ -237,7 +247,7 @@ class Ui_MainWindow(object):
         self.subtitle_vertex.setObjectName("subtitle_vertex")
         MainWindow.setCentralWidget(self.generalWigdet)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1658, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1662, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)

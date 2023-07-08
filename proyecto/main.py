@@ -1,13 +1,15 @@
 from qt import *
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtCore import Qt, QRect, QPoint
-from PyQt5.QtGui import QPainter, QPen, QBrush, QColor
+from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QIcon
+import img_rc
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
     def __init__(self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle("Proyecto final Grafos | Iñigo Q D")
+        self.setWindowIcon( QIcon(":/cct/grafosback.png"))
         
         self.vertexAdd = False
         self.edgeAdd = False
