@@ -53,7 +53,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         
 
 
-
     def show_pos(self, click):
         print(f"Left button pressed: X:{click.x()}, Y:{click.y()}")
         self.statusbar.showMessage(f"X:{click.x()}, Y:{click.y()}")
@@ -115,7 +114,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         for i in range(len(self.circles)):
             x, y = self.circles[i]
             
-            painter.drawLine(x+radius-5,y+radius+5, 500, 500)
+            painter.drawLine(x+radius,y+radius, 500, 500)
             
             painter.drawEllipse(x, y, diameter, diameter)
             try:
