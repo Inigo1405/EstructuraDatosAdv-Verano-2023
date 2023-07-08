@@ -15,8 +15,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
 
         #self.display.clicked.connect(self.button_clicked)
         self.cleanAll.clicked.connect(self.clear_graph)
+        
         self.addVertex.clicked.connect(self.addButton_vertex)
         self.delVertex.clicked.connect(self.delButton_vertex)
+        
+        self.addEdge.clicked.connect(self.addButton_edge)
+        self.delEdge.clicked.connect(self.delButton_edge)
+
 
         self.statusbar.showMessage("Ready!")
 
@@ -29,6 +34,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
 
         self.circles = []
         self.hitBox = []
+        self.edges = []
+        
+        self.coordsLine = []
         
         #Para pintar en el widget canvas
         self.canvas.mousePressEvent = self._mousePressEvent
@@ -39,18 +47,41 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
     def clear_graph(self):
         self.circles = []
         self.hitBox = []
+        self.edges = []
+        self.coordsLine = []
+        
         self.statusbar.showMessage("Graph clean!")
         print(self.circles)
         self.update()
 
 
-    def delButton_vertex(self):
-        self.vertexAdd = False
-
 
     def addButton_vertex(self):
         self.vertexAdd = True
+        self.edgeAdd = None
+        self.coordsLine = []
         
+
+    def delButton_vertex(self):
+        self.vertexAdd = False
+        self.edgeAdd = None
+        self.coordsLine = []
+
+
+    def addButton_edge(self):
+        if len(self.circles) > 1:
+            self.edgeAdd = True
+            self.vertexAdd = None
+            self.coordsLine = []
+        
+        else:
+            self.statusbar.showMessage("Deben existir dos nodos mínimo!")
+        
+        
+    def delButton_edge(self):
+        self.edgeAdd = False
+        self.vertexAdd = None
+        self.coordsLine = []
 
 
     def show_pos(self, click):
@@ -71,8 +102,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
             self.x = clicked_pos.x()
             self.y = clicked_pos.y()
             self.click = True
-            self.search_vertex()
+            v = self.search_vertex()
             self.del_vertex()
+            self.coordsLine.append(v)
+            
             self.statusbar.showMessage(f'{self.x} , {self.y}')
             self.canvas.update()
             
@@ -82,7 +115,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
 
 
     def paintEvent(self, event):
-            
         diameter = 50
         radius = int(diameter/2)
         
@@ -90,32 +122,44 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         
         painter.setPen(QPen(QtCore.Qt.black, 3, QtCore.Qt.SolidLine))
         painter.setBrush(QBrush(QtCore.Qt.blue, QtCore.Qt.SolidPattern))
-        #
         
         
         collisionShape = radius*3
         print(self.canvas.rect())
         
         if self.click and self.hitBox_area() and self.vertexAdd:
-            painter.drawEllipse(self.x-radius, self.y-radius, diameter, diameter)
-            
+            #painter.drawEllipse(self.x-radius, self.y-radius, diameter, diameter)
             
             self.circles.append((self.x-radius, self.y-radius))
             self.hitBox.append((self.x+(collisionShape), self.y+(collisionShape), self.x-(collisionShape), self.y-(collisionShape)))
 
 
-        if self.edgeAdd:
-            pass
-
-
+        if self.edgeAdd and self.click and len(self.coordsLine) == 2:
+            
+            node1 = self.coordsLine[0]
+            node2 = self.coordsLine[1]
+            
+            if node1 != None and node2 != None:
+            
+                x1, y1 = self.circles[node1]
+                x2, y2 = self.circles[node2]
+                
+                self.edges.append((x1+radius, y1+radius, x2+radius, y2+radius))
+            
+            
+            self.coordsLine = []
+            
 
         self.click = False
+        for i in range(len(self.edges)):
+            x1, y1, x2, y2 = self.edges[i]
+            painter.drawLine(x1, y1, x2, y2)
+        
+        
 
         for i in range(len(self.circles)):
             x, y = self.circles[i]
-            
-            painter.drawLine(x+radius,y+radius, 500, 500)
-            
+        
             painter.drawEllipse(x, y, diameter, diameter)
             try:
                 painter.drawText(x+radius-5, y+radius+5, self.listABC[i])
