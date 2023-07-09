@@ -2,6 +2,9 @@ from qt import *
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtCore import Qt, QRect, QPoint
 from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QIcon
+
+from lista_adyacencia import Graph
+from cola import Queue
 import img_rc
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
@@ -14,6 +17,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.vertexAdd = False
         self.edgeAdd = False
 
+        self.g = Graph(0)
 
         #self.display.clicked.connect(self.button_clicked)
         self.cleanAll.clicked.connect(self.clear_graph)
@@ -27,7 +31,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.statusbar.showMessage("Ready!")
 
         self.listABC = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-        self.listabc = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+
         
         self.x = 0
         self.y = 0
@@ -35,9 +39,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
 
         self.circles = []
         self.hitBox = []
+
         self.edges = []
-        
+        self.nodeEdges = []
+
         self.coordsLine = []
+        self.vertexes = []
         
         #Para pintar en el widget canvas
         self.canvas.mousePressEvent = self._mousePressEvent
@@ -49,6 +56,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.hitBox = []
         self.edges = []
         self.coordsLine = []
+        self.nodeEdges = []
+        self.g.graph = {}
         
         self.statusbar.showMessage("Graph clean!")
         print(self.circles)
@@ -95,27 +104,26 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
 
     def _mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            print("left button pressed")
+
             clicked_pos = event.pos()
-            print(f"{clicked_pos}")
             self.x = clicked_pos.x()
             self.y = clicked_pos.y()
             self.click = True
+
             v = self.search_vertex()
             self.coordsLine.append(v)
 
             self.del_vertex()
             self.del_edge()
             
-            self.statusbar.showMessage(f'{self.x} , {self.y}')
+            #self.statusbar.showMessage(f'{self.x} , {self.y}')
             self.canvas.update()
-            
-        elif event.button() == Qt.RightButton:
-            print("\nright button pressed")
             
 
 
     def paintEvent(self, event):
+        self.graph()
+
         diameter = 50
         radius = int(diameter/2)
         
@@ -127,43 +135,59 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         collisionShape = radius*3
         print(self.canvas.rect())
         
+        #Agregar nodos
         if self.click and self.hitBox_area() and self.vertexAdd:
             #painter.drawEllipse(self.x-radius, self.y-radius, diameter, diameter)
             self.circles.append((self.x-radius, self.y-radius))
             self.hitBox.append((self.x+(collisionShape), self.y+(collisionShape), self.x-(collisionShape), self.y-(collisionShape)))
+        
+        
 
-
+        #Agregar conexiones
         if self.edgeAdd and self.click and len(self.coordsLine) == 2:
             node1 = self.coordsLine[0]
             node2 = self.coordsLine[1]
-
             
             if node1 != None and node2 != None:
                 x1, y1 = self.circles[node1]
                 x2, y2 = self.circles[node2]
                 
                 self.edges.append((x1+radius, y1+radius, x2+radius, y2+radius, node1, node2))
-            
-            
+
+                
+                v = self.listABC[node1]
+                w = self.listABC[node2]
+
+               
+
+                #ToDo Elaborar una función que saque el peso entre puntos
+                #ToDo para que funcione el recorrido dijkstra. 
+
+
+                if self.listABC.index(v) < self.listABC.index(w):
+                    if (v, w) not in self.nodeEdges:
+                        self.nodeEdges.append((v, w))
+
+                else:
+                    if (w, v) not in self.nodeEdges:
+                        self.nodeEdges.append((w, v))
+
+            print(self.nodeEdges)
             self.coordsLine = []
             
+
 
         self.click = False
         for i in range(len(self.edges)):
             x1, y1, x2, y2, v, w = self.edges[i]
             painter.drawLine(x1, y1, x2, y2)
         
-        
 
         for i in range(len(self.circles)):
             x, y = self.circles[i]
-        
             painter.drawEllipse(x, y, diameter, diameter)
-            try:
-                painter.drawText(x+radius-5, y+radius+5, self.listABC[i])
-            except:
-                painter.drawText(x+radius-5, y+radius+5, self.listabc[i-len(self.listABC)])
-        
+
+            painter.drawText(x+radius-5, y+radius+5, self.listABC[i])
         
         painter.end()
             
@@ -176,16 +200,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                 x1, y1, x2, y2 = self.hitBox[i]
 
                 if self.x < x1 and self.x > x2 and self.y <= y1 and self.y >= y2:
-                    try:
-                        print(f"Nodo: {self.listABC[i]}") 
-                        return i
+                    print(f"Nodo: {self.listABC[i]}") 
+                    return i
                     
-                    except:
-                        print(f"Nodo: {self.listabc[i-len(self.listABC)]}")
-                        return i
+                    
 
-
-    
     #Identifica las hitBox de los nodos 
     def hitBox_area(self):
         if self.hitBox == []:
@@ -206,6 +225,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
             if seguro:
                 return True
         
+
         
     #Elimina los nodos
     def del_vertex(self):
@@ -216,6 +236,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                 self.circles.pop(x)
                 
             self.update()
+
 
 
     #Elimina los vertices
@@ -233,9 +254,71 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                     self.edges.pop(lista[i])
 
             self.update()
-                    
+
+    
+
+    def graph(self):
+        if len(self.circles) > 1 and self.nodeEdges != []:
+            self.g = Graph(len(self.circles))
+            self.g.graph = {}
+
+            for i in range(len(self.circles)):
+                if i < len(self.listABC):
+                    self.g.add_vertex(self.listABC[i])
+                
+
+           
+            self.ABC_order()
+
+
+            for i in self.g.keys:
+                self.g.display(i)
+
+            empty = []
+            emptyQueue = Queue()
+            print("\nRecorrido BFS")
+            self.g.recorrido('A', empty, emptyQueue)
+
+
+            empty = []
+            print("\n\nRecorrido DFS")
+            self.g.recorridoRecursivo('A', empty)
+
+            print()
+            self.g.displayMatrix()
+
+    
+    def ABC_order(self):
+        index = []
+        for i in range(len(self.circles)):
+            index = []
+            for edge in self.nodeEdges:
+                v, w = edge
+
+                if self.listABC[i] == v:
+                    index.append(self.listABC.index(w))
+                    index = sorted(index)
+            
+                
+            self.vertexes.append(index)
+
+            
+            for j in range(len(self.vertexes[i])):
+                self.g.add_edge(self.listABC[i], self.listABC[self.vertexes[i][j]])
+
+
+        self.vertexes = []
+
+            
                     
 
+            
+        # print(edge)
+        # print(index)
+                
+                
+
+                
         
 
 
