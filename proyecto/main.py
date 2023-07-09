@@ -24,7 +24,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.addEdge.clicked.connect(self.addButton_edge)
         self.delEdge.clicked.connect(self.delButton_edge)
 
-
         self.statusbar.showMessage("Ready!")
 
         self.listABC = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
@@ -45,7 +44,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.canvas.paintEvent = self.paintEvent
 
 
-
     def clear_graph(self):
         self.circles = []
         self.hitBox = []
@@ -55,7 +53,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.statusbar.showMessage("Graph clean!")
         print(self.circles)
         self.update()
-
 
 
     def addButton_vertex(self):
@@ -105,8 +102,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
             self.y = clicked_pos.y()
             self.click = True
             v = self.search_vertex()
-            self.del_vertex()
             self.coordsLine.append(v)
+
+            self.del_vertex()
+            self.del_edge()
             
             self.statusbar.showMessage(f'{self.x} , {self.y}')
             self.canvas.update()
@@ -121,7 +120,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         radius = int(diameter/2)
         
         painter = QPainter(self.canvas)
-        
         painter.setPen(QPen(QtCore.Qt.black, 3, QtCore.Qt.SolidLine))
         painter.setBrush(QBrush(QtCore.Qt.blue, QtCore.Qt.SolidPattern))
         
@@ -131,22 +129,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         
         if self.click and self.hitBox_area() and self.vertexAdd:
             #painter.drawEllipse(self.x-radius, self.y-radius, diameter, diameter)
-            
             self.circles.append((self.x-radius, self.y-radius))
             self.hitBox.append((self.x+(collisionShape), self.y+(collisionShape), self.x-(collisionShape), self.y-(collisionShape)))
 
 
         if self.edgeAdd and self.click and len(self.coordsLine) == 2:
-            
             node1 = self.coordsLine[0]
             node2 = self.coordsLine[1]
+
             
             if node1 != None and node2 != None:
-            
                 x1, y1 = self.circles[node1]
                 x2, y2 = self.circles[node2]
                 
-                self.edges.append((x1+radius, y1+radius, x2+radius, y2+radius))
+                self.edges.append((x1+radius, y1+radius, x2+radius, y2+radius, node1, node2))
             
             
             self.coordsLine = []
@@ -154,7 +150,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
 
         self.click = False
         for i in range(len(self.edges)):
-            x1, y1, x2, y2 = self.edges[i]
+            x1, y1, x2, y2, v, w = self.edges[i]
             painter.drawLine(x1, y1, x2, y2)
         
         
@@ -173,6 +169,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
             
 
 
+    #Identifica el nodo seleccionado
     def search_vertex(self):
         if self.hitBox != []:
             for i in range(len(self.hitBox)):
@@ -188,7 +185,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                         return i
 
 
-
+    
+    #Identifica las hitBox de los nodos 
     def hitBox_area(self):
         if self.hitBox == []:
             print("Agregado")
@@ -209,21 +207,38 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                 return True
         
         
-        
+    #Elimina los nodos
     def del_vertex(self):
         if self.circles != [] and self.vertexAdd == False:
             x = self.search_vertex()
-            print(x)
             if x != None:
                 self.hitBox.pop(x)
                 self.circles.pop(x)
                 
-            print(self.circles)
-            print(self.circles)
             self.update()
 
+
+    #Elimina los vertices
+    def del_edge(self):
+        if self.edges != [] and self.edgeAdd == False:
+            x = self.search_vertex()
+            if x != None:
+                lista = []
+                for i in range(len(self.edges)):
+                    if x == self.edges[i][4] or x == self.edges[i][5]:
+                        lista.append(i)
+
+                lista = sorted(lista, reverse=True)
+                for i in range(len(lista)):
+                    self.edges.pop(lista[i])
+
+            self.update()
+                    
+                    
+
         
-        
+
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     window = MainWindow()
