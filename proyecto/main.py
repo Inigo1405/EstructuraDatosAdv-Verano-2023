@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtCore import Qt, QRect, QPoint
 from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QIcon
 
+import math
 from lista_adyacencia import Graph
 from cola import Queue
 import img_rc
@@ -141,7 +142,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
             self.circles.append((self.x-radius, self.y-radius))
             self.hitBox.append((self.x+(collisionShape), self.y+(collisionShape), self.x-(collisionShape), self.y-(collisionShape)))
         
-        
 
         #Agregar conexiones
         if self.edgeAdd and self.click and len(self.coordsLine) == 2:
@@ -158,10 +158,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                 v = self.listABC[node1]
                 w = self.listABC[node2]
 
-               
 
                 #ToDo Elaborar una función que saque el peso entre puntos
                 #ToDo para que funcione el recorrido dijkstra. 
+
+                #self.edgeWeight(x1, y1, x2, y2)
 
 
                 if self.listABC.index(v) < self.listABC.index(w):
@@ -192,6 +193,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         painter.end()
             
 
+    
+    def edgeWeight(self, v, w):
+        i = self.listABC.index(v)
+        j = self.listABC.index(w)
+
+        #ToDo Elaborar una función que saque el peso entre puntos
+        #ToDo para que funcione el recorrido dijkstra.
+         
+        x1, y1 = self.circles[i]
+        x2, y2 = self.circles[j]
+        
+        return math.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+        
+    
 
     #Identifica el nodo seleccionado
     def search_vertex(self):
@@ -284,6 +299,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
             print("\n\nRecorrido DFS")
             self.g.recorridoRecursivo('A', empty)
 
+            
             print()
             self.g.displayMatrix()
 
@@ -299,22 +315,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                     index.append(self.listABC.index(w))
                     index = sorted(index)
             
-                
             self.vertexes.append(index)
-
             
             for j in range(len(self.vertexes[i])):
-                self.g.add_edge(self.listABC[i], self.listABC[self.vertexes[i][j]])
+                p = self.edgeWeight(self.listABC[i], self.listABC[self.vertexes[i][j]])
+                
+                self.g.add_edge(self.listABC[i], self.listABC[self.vertexes[i][j]], p)
 
 
         self.vertexes = []
 
             
                     
-
-            
-        # print(edge)
-        # print(index)
                 
                 
 
