@@ -14,5 +14,5 @@ if __name__ == "__main__":
     
     
     
-#pyuic5 -x file.ui -o file.py
-#pyrcc5 -x file.qrc -o file_rc.py
+#pyuic5 -x qt.ui -o qt.py
+#pyrcc5 img.qrc -o img_rc.py

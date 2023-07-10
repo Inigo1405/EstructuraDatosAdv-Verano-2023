@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="cct">
     <file>grafosback.png</file>
+    <file>undertale.ttf</file>
   </qresource>
 </RCC>

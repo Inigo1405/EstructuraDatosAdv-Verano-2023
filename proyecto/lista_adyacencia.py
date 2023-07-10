@@ -162,7 +162,7 @@ class Graph:
 
 
 
-    def dijkstra(self, inicio, fin, visitados=[], peso=0, visitadosPos=[]):
+    def dijkstra(self, inicio, fin, visitados=[], visitadosPos=[],  peso=[]):
         """Recorrido de tipo dijkstra que trabaja con pesos en las conexiones."""
         if inicio in self.keys and fin in self.keys:
             
@@ -171,10 +171,12 @@ class Graph:
 
             print()
             print(visitados)
+            
+            
             print("Peso: ", peso)
 
             if inicio == fin:
-                return
+                return 
 
             row = self.keys.index(inicio)
             print(self.matriz[row]) 
@@ -197,8 +199,9 @@ class Graph:
             print("Min: ", x)
             print("Letra: ", self.keys[pos])
             
+            peso.append(x)
             #time.sleep(2)
-            self.dijkstra(self.keys[pos], fin, visitados, peso + x, visitadosPos)
+            self.dijkstra(self.keys[pos], fin, visitados, visitadosPos, peso)
 
             return visitados, peso
             

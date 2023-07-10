@@ -1,9 +1,10 @@
 from qt import *
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtCore import Qt, QRect, QPoint
-from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QIcon
+from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QIcon, QFontDatabase, QFont
 
 import math
+import numpy as np
 from lista_adyacencia import Graph
 from cola import Queue
 import img_rc
@@ -52,26 +53,34 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         self.canvas.paintEvent = self.paintEvent
 
 
+
     def clear_graph(self):
+        self.workMode.setText("Grafo nuevo!")
         self.circles = []
         self.hitBox = []
         self.edges = []
         self.coordsLine = []
         self.nodeEdges = []
         self.g.graph = {}
-        
+
+        self.bfs_text.setText('[ ]')
+        self.dfs_text.setText('[ ]')
+        self.dijkstra_text.setText('[ ]')
+        self.matrix_text.setText('[ ]')
         self.statusbar.showMessage("Graph clean!")
         print(self.circles)
         self.update()
 
 
     def addButton_vertex(self):
+        self.workMode.setText("Modo de trabajo: Agregar vértice")
         self.vertexAdd = True
         self.edgeAdd = None
         self.coordsLine = []
         
 
     def delButton_vertex(self):
+        self.workMode.setText("Modo de trabajo: Eliminar vértice")
         self.vertexAdd = False
         self.edgeAdd = None
         self.coordsLine = []
@@ -79,6 +88,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
 
     def addButton_edge(self):
         if len(self.circles) > 1:
+            self.workMode.setText("Modo de trabajo: Agregar conexión")
             self.edgeAdd = True
             self.vertexAdd = None
             self.coordsLine = []
@@ -88,6 +98,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         
         
     def delButton_edge(self):
+        self.workMode.setText("Modo de trabajo: Eliminar conexión")
         self.edgeAdd = False
         self.vertexAdd = None
         self.coordsLine = []
@@ -310,8 +321,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
                 self.dfs_text.setText(text_dfs)
             
             
-                #print()
-                #self.g.displayMatrix()
+                print(self.g.matriz)
+                self.matrix_text.setText(self.get_matrix_string(self.g.matriz))
+                
+
+
                 dijkstra_key = True
                 for i in range(len(self.circles)):
                     if self.g.graph[self.listABC[i]] == []:
@@ -319,11 +333,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
 
 
                 if dijkstra_key:
+
                     print()
                     empty = []
                     empty2 = []
+                    x = []
+                    
                     print("Recorrido Dijkstra")
-                    self.g.dijkstra('A', self.listABC[len(self.circles)-1], empty, 0, empty2)
+                    dijkstra, weight = self.g.dijkstra('A', self.listABC[len(self.circles)-1], empty, empty2, x)
+
+                    text_dijkstra = ''
+                    for i in dijkstra:
+                        text_dijkstra  = text_dijkstra + i + "→"
+                    text_dijkstra  = text_dijkstra + "Null"
+
+                    weight = sum(weight)
+                    self.dijkstra_text.setText(f"{text_dijkstra}, Peso de: {weight}")
+
+        self.update()
 
 
     
@@ -350,7 +377,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
 
             
                     
-                
+    def get_matrix_string(self, matriz):
+        matriz_str = ""
+        for fila in matriz:
+            fila_str = " ".join(str(elemento) for elemento in fila)
+            matriz_str += fila_str + "\n"
+        return matriz_str
                 
 
                 
