@@ -105,13 +105,11 @@ class Graph:
 
             x = self.graph[inicial]
             if x.vertex not in visitados:
-                print("Dentro1")
                 self.recorridoRecursivo(x.vertex, visitados)
             
             else:
                 while x != None:
                     if x.vertex not in visitados:
-                        print("Dentro2")
                         self.recorridoRecursivo(x.vertex, visitados)
                     x = x.next
 
@@ -153,7 +151,7 @@ class Graph:
 
     def displayMatrix(self):
         for i in self.keys:
-            print("", i, end=' ')
+            print(" ", i, end='  ')
         
         max_len = len(str(np.max(self.matriz)))
         
@@ -199,7 +197,7 @@ class Graph:
             print("Min: ", x)
             print("Letra: ", self.keys[pos])
             
-            time.sleep(2)
+            #time.sleep(2)
             self.dijkstra(self.keys[pos], fin, visitados, peso + x, visitadosPos)
 
             return visitados, peso

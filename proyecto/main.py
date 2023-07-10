@@ -147,22 +147,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         if self.edgeAdd and self.click and len(self.coordsLine) == 2:
             node1 = self.coordsLine[0]
             node2 = self.coordsLine[1]
-            
-            if node1 != None and node2 != None:
+
+            if node1 != None and node2 != None and node1 != node2:
                 x1, y1 = self.circles[node1]
                 x2, y2 = self.circles[node2]
                 
                 self.edges.append((x1+radius, y1+radius, x2+radius, y2+radius, node1, node2))
-
                 
                 v = self.listABC[node1]
                 w = self.listABC[node2]
-
-
-                #ToDo Elaborar una función que saque el peso entre puntos
-                #ToDo para que funcione el recorrido dijkstra. 
-
-                #self.edgeWeight(x1, y1, x2, y2)
 
 
                 if self.listABC.index(v) < self.listABC.index(w):
@@ -197,9 +190,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
     def edgeWeight(self, v, w):
         i = self.listABC.index(v)
         j = self.listABC.index(w)
-
-        #ToDo Elaborar una función que saque el peso entre puntos
-        #ToDo para que funcione el recorrido dijkstra.
          
         x1, y1 = self.circles[i]
         x2, y2 = self.circles[j]
@@ -259,6 +249,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
         if self.edges != [] and self.edgeAdd == False:
             x = self.search_vertex()
             if x != None:
+                #Elimina del grafo conexiones anteriores
+                self.nodeEdges = [edge for edge in self.nodeEdges if edge[0] != self.listABC[x] and edge[1] != self.listABC[x]]
+
                 lista = []
                 for i in range(len(self.edges)):
                     if x == self.edges[i][4] or x == self.edges[i][5]:
@@ -285,23 +278,53 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow, QWidget):
            
             self.ABC_order()
 
-
             for i in self.g.keys:
                 self.g.display(i)
 
-            empty = []
-            emptyQueue = Queue()
-            print("\nRecorrido BFS")
-            self.g.recorrido('A', empty, emptyQueue)
+
+            if self.g.graph['A'] != []:
+
+                empty = []
+                emptyQueue = Queue()
+                print("\nRecorrido BFS")
+                bfs = self.g.recorrido('A', empty, emptyQueue)
+
+                text_bfs = ''
+                for i in bfs:
+                    text_bfs  = text_bfs + i + "→"
+                text_bfs  = text_bfs + "Null"
+                
 
 
-            empty = []
-            print("\n\nRecorrido DFS")
-            self.g.recorridoRecursivo('A', empty)
+                empty = []
+                print("\n\nRecorrido DFS")
+                dfs = self.g.recorridoRecursivo('A', empty)
+                
+                text_dfs = ''
+                for i in dfs:
+                    text_dfs  = text_dfs + i + "→"
+                text_dfs  = text_dfs + "Null"
 
+                
+                self.bfs_text.setText(text_bfs)
+                self.dfs_text.setText(text_dfs)
             
-            print()
-            self.g.displayMatrix()
+            
+                #print()
+                #self.g.displayMatrix()
+                dijkstra_key = True
+                for i in range(len(self.circles)):
+                    if self.g.graph[self.listABC[i]] == []:
+                        dijkstra_key = False
+
+
+                if dijkstra_key:
+                    print()
+                    empty = []
+                    empty2 = []
+                    print("Recorrido Dijkstra")
+                    self.g.dijkstra('A', self.listABC[len(self.circles)-1], empty, 0, empty2)
+
 
     
     def ABC_order(self):
